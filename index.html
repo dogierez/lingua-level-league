@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grammar League System</title>
     
+    <!-- PWA Additions -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#D4AF37">
     <link rel="apple-touch-icon" href="logo.png">
@@ -317,6 +318,7 @@
     </div>
 
     <div class="app-container">
+        <!-- FLASHCARD UI -->
         <div class="flashcard" id="flashcard-screen">
             <div class="level-badge" id="level-badge">League 1</div>
             
@@ -334,6 +336,7 @@
             </div>
         </div>
 
+        <!-- SUMMARY UI -->
         <div class="summary-screen" id="summary-screen">
             <div class="summary-title" id="summary-title">League Complete!</div>
             
@@ -548,8 +551,8 @@
                 {
                     vocab: { "polis": "police", "çatılarda": "roofs", "koşarken": "running", "siyah": "black", "maske": "mask", "takan": "wearing", "hırsızı": "thief", "yakalayamadı": "catch" },
                     level1: { tr: "Polis hırsızı yakalayamadı.", en: "The police couldn't catch the thief." },
-                    level2: { tr: "Polis, <span class='text-purple'>o çatılarda koşarken</span> hırsızı yakalayamadı.", en: "The police couldn't catch the thief <span class='text-purple'>while he was running across the roofs</span>." },
-                    level3: { tr: "Polis, <span class='text-purple'>o çatılarda koşarken</span> <span class='text-orange'>siyah maske takan</span> hırsızı yakalayamadı.", en: "The police couldn't catch the thief <span class='text-orange'>wearing a black mask</span> <span class='text-purple'>while he was running across the roofs</span>." }
+                    level2: { tr: "Polis, <span class='text-purple'>o çatılarda koşarken</span> hırsızı yakalayamadı.", en: "The police couldn't catch the thief <span class='text-purple'>while he was running on the roofs</span>." },
+                    level3: { tr: "Polis, <span class='text-purple'>o çatılarda koşarken</span> <span class='text-orange'>siyah maske takan</span> hırsızı yakalayamadı.", en: "The police couldn't catch the thief <span class='text-orange'>wearing a black mask</span> <span class='text-purple'>while he was running on the roofs</span>." }
                 },
                 {
                     vocab: { "çocuklar": "children", "müdür": "principal", "gelmeden": "arrived", "sınıfı": "classroom", "temizlemişti": "cleaned", "cezalandırılan": "punished" },
@@ -829,6 +832,7 @@
 
     </script>
     
+    <!-- PWA Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
