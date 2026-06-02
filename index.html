@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar League System</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --purple-highlight: #8e44ad;
+            --orange-highlight: #d35400;
+            --btn-primary: #3498db;
+            --btn-hover: #2980b9;
+            --btn-correct: #27ae60;
+            --btn-correct-hover: #2ecc71;
+            --btn-wrong: #e74c3c;
+            --btn-wrong-hover: #c0392b;
+            --btn-advance: #f39c12;
+            --btn-advance-hover: #e67e22;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            color: #2c3e50;
+        }
+
+        .progress {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        /* Container for both screens */
+        .app-container {
+            width: 90%;
+            max-width: 650px;
+        }
+
+        /* Flashcard Screen Styles */
+        .flashcard {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            min-height: 250px;
+            border: 3px solid #e74c3c; 
+        }
+
+        .level-badge {
+            align-self: flex-start;
+            background-color: #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #34495e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .turkish-text, .english-text {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            font-weight: 500;
+            min-height: 60px;
+        }
+
+        .text-purple {
+            color: var(--purple-highlight);
+            font-weight: 700;
+        }
+
+        .text-orange {
+            color: var(--orange-highlight);
+            font-weight: 700;
+        }
+
+        .divider-line {
+            display: none;
+            height: 2px;
+            background-color: #e74c3c;
+            width: 100%;
+            border: none;
+            margin: 0.5rem 0;
+        }
+
+        .english-text {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            gap: 1rem;
+        }
+
+        button {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            color: white;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-show { background-color: var(--btn-primary); }
+        .btn-show:hover { background-color: var(--btn-hover); }
+
+        .assessment-btns {
+            display: none;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .btn-correct { background-color: var(--btn-correct); }
+        .btn-correct:hover { background-color: var(--btn-correct-hover); }
+        
+        .btn-wrong { background-color: var(--btn-wrong); }
+        .btn-wrong:hover { background-color: var(--btn-wrong-hover); }
+
+        /* Summary Screen Styles */
+        .summary-screen {
+            display: none;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 3px solid var(--btn-primary);
+        }
+
+        .summary-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .stat-green { color: var(--btn-correct); }
+        .stat-red { color: var(--btn-wrong); }
+        .stat-blue { color: var(--btn-primary); }
+
+        .summary-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-review { background-color: var(--btn-wrong); }
+        .btn-review:hover { background-color: var(--btn-wrong-hover); }
+
+        .btn-advance { background-color: var(--btn-advance); }
+        .btn-advance:hover { background-color: var(--btn-advance-hover); }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Grammar League</h1>
+        <div class="progress" id="progress-text">Initializing...</div>
+    </div>
+
+    <div class="app-container">
+        <div class="flashcard" id="flashcard-screen">
+            <div class="level-badge" id="level-badge">League 1</div>
+            
+            <div class="turkish-text" id="turkish-text"></div>
+            <hr class="divider-line" id="divider-line">
+            <div class="english-text" id="english-text"></div>
+
+            <div class="controls" id="btn-show-container">
+                <button class="btn-show" onclick="showEnglish()">Show English</button>
+            </div>
+
+            <div class="controls assessment-btns" id="assessment-btns">
+                <button class="btn-wrong" onclick="recordAnswer(false)">❌ Incorrect</button>
+                <button class="btn-correct" onclick="recordAnswer(true)">✅ Correct</button>
+            </div>
+        </div>
+
+        <div class="summary-screen" id="summary-screen">
+            <div class="summary-title" id="summary-title">League Complete!</div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number stat-green" id="stat-correct">0</div>
+                    <div>Correct</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number stat-red" id="stat-wrong">0</div>
+                    <div>Incorrect</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number stat-blue" id="stat-percent">0%</div>
+                    <div>Accuracy</div>
+                </div>
+            </div>
+
+            <div class="summary-controls" id="summary-controls">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        const sentences = [
+            {
+                level1: { tr: "Müdür projeyi inceliyordu.", en: "The manager was examining the project." },
+                level2: { tr: "Müdür projeyi <span class='text-purple'>Genel merkeze yollamak için</span> inceliyordu.", en: "The manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." },
+                level3: { tr: "<span class='text-orange'>Atanan</span> Müdür projeyi <span class='text-purple'>Genel merkeze yollamak için</span> inceliyordu.", en: "The <span class='text-orange'>assigned</span> manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." }
+            },
+            {
+                level1: { tr: "Taksici müşteriyi beklemedi.", en: "The taxi driver didn't wait for the customer." },
+                level2: { tr: "Taksici müşteriyi <span class='text-purple'>müşteri sarhoş olduğundan dolayı</span> beklemedi.", en: "The taxi driver didn't wait for the customer <span class='text-purple'>because the customer was drunk</span>." },
+                level3: { tr: "Taksici <span class='text-orange'>bağıran</span> müşteriyi <span class='text-purple'>müşteri sarhoş olduğundan dolayı</span> beklemedi.", en: "The taxi driver didn't wait for the <span class='text-orange'>shouting</span> customer <span class='text-purple'>because the customer was drunk</span>." }
+            },
+            {
+                level1: { tr: "Bankacı hesapları kontrol etmişti.", en: "The banker had checked the accounts." },
+                level2: { tr: "Bankacı hesapları <span class='text-purple'>Yapay Zeka kullanarak</span> kontrol etmişti.", en: "The banker had checked the accounts <span class='text-purple'>by using Artificial Intelligence</span>." },
+                level3: { tr: "<span class='text-orange'>Çağrılan</span> Bankacı hesapları <span class='text-purple'>Yapay Zeka kullanarak</span> kontrol etmişti.", en: "The <span class='text-orange'>called</span> banker had checked the accounts <span class='text-purple'>by using Artificial Intelligence</span>." }
+            },
+            {
+                level1: { tr: "Kasap etleri doğrardı.", en: "The butcher used to chop the meat." },
+                level2: { tr: "Kasap <span class='text-purple'>kadınlar mangal yapabilsin diye</span> etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the women could barbecue</span>." },
+                level3: { tr: "Kasap <span class='text-orange'>bekleyen</span> <span class='text-purple'>kadınlar mangal yapabilsin diye</span> etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the </span><span class='text-orange'>waiting</span><span class='text-purple'> women could barbecue</span>." }
+            },
+            {
+                level1: { tr: "Pilot kokpiti düzenliyor.", en: "The pilot is organizing the cockpit." },
+                level2: { tr: "Pilot kokpiti <span class='text-purple'>düzgün bir şekilde</span> düzenliyor.", en: "The pilot is organizing the cockpit <span class='text-purple'>in a proper way</span>." },
+                level3: { tr: "Pilot <span class='text-orange'>tamir edilen</span> kokpiti <span class='text-purple'>düzgün bir şekilde</span> düzenliyor.", en: "The pilot is organizing the <span class='text-orange'>repaired</span> cockpit <span class='text-purple'>in a proper way</span>." }
+            },
+            {
+                level1: { tr: "Birisi kutuları açtı.", en: "Somebody opened the boxes." },
+                level2: { tr: "Birisi kutuları <span class='text-purple'>müşteriler gelene kadar</span> açtı.", en: "Somebody opened the boxes <span class='text-purple'>until the customers arrived</span>." },
+                level3: { tr: "Birisi <span class='text-orange'>teslim edilen</span> kutuları <span class='text-purple'>müşteriler gelene kadar</span> açtı.", en: "Somebody opened the <span class='text-orange'>delivered</span> boxes <span class='text-purple'>until the customers arrived</span>." }
+            },
+            {
+                level1: { tr: "Sürücü forklifti Park edemedi.", en: "The driver couldn't park the forklift." },
+                level2: { tr: "<span class='text-purple'>Müşteriler alışveriş yaparken</span> Sürücü forklifti Park edemedi.", en: "The driver couldn't park the forklift <span class='text-purple'>while the customers were shopping</span>," },
+                level3: { tr: "<span class='text-orange'>Acele eden</span> <span class='text-purple'>Müşteriler alışveriş yaparken</span> Sürücü forklifti Park edemedi.", en: "The driver couldn't park the forklift <span class='text-purple'>while the </span><span class='text-orange'>hurrying</span><span class='text-purple'> customers were shopping</span>," }
+            },
+            {
+                level1: { tr: "Koruma iş adamını uyarmak zorundaydı.", en: "The bodyguard had to warn the businessman." },
+                level2: { tr: "Koruma iş adamını uyarmak zorundaydı, <span class='text-purple'>Bu yüzden cep telefonunu kullandı</span>.", en: "The bodyguard had to warn the businessman, <span class='text-purple'>so he used his mobile phone</span>." },
+                level3: { tr: "<span class='text-orange'>Silah Taşıyan</span> Koruma iş adamını uyarmak zorundaydı, <span class='text-purple'>Bu yüzden cep telefonunu kullandı</span>.", en: "The bodyguard <span class='text-orange'>carrying a weapon</span> had to warn the businessman, <span class='text-purple'>so he used his mobile phone</span>." }
+            },
+            {
+                level1: { tr: "Barista kahveleri hazırlamalı.", en: "The barista should prepare the coffees." },
+                level2: { tr: "Barista kahveleri <span class='text-purple'>müşteriler oturmadan önce</span> hazırlamalı.", en: "The barista should prepare the coffees <span class='text-purple'>before the customers sit down</span>." },
+                level3: { tr: "<span class='text-orange'>Yönetim tarafından uyarılan</span> Barista kahveleri <span class='text-purple'>müşteriler oturmadan önce</span> hazırlamalı.", en: "The barista <span class='text-orange'>warned by the management</span> should prepare the coffees <span class='text-purple'>before the customers sit down</span>." }
+            },
+            {
+                level1: { tr: "Doktor hastayı tedavi edecek.", en: "The doctor will treat the patient." },
+                level2: { tr: "Doktor <span class='text-purple'>her şeye rağmen</span> hastayı tedavi edecek.", en: "The doctor will treat the patient <span class='text-purple'>despite everything</span>," },
+                level3: { tr: "Doktor <span class='text-purple'>her şeye rağmen</span> <span class='text-orange'>polis tarafından vurulan</span> hastayı tedavi edecek.", en: "The doctor will treat the patient <span class='text-orange'>shot by the police</span> <span class='text-purple'>despite everything</span>," }
+            },
+            {
+                level1: { tr: "Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables." },
+                level2: { tr: "<span class='text-purple'>Müşteriler geldiğinde</span> Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers arrived</span>," },
+                level3: { tr: "<span class='text-orange'>Para harcayan</span> <span class='text-purple'>Müşteriler geldiğinde</span> Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers </span><span class='text-orange'>spending money</span><span class='text-purple'> arrived</span>," }
+            },
+            {
+                level1: { tr: "Güvenlik kamerları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras." },
+                level2: { tr: "Güvenlik, <span class='text-purple'>FBI talep edene kadar</span> kamerları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." },
+                level3: { tr: "<span class='text-orange'>Her şeyi kaydeden</span> Güvenlik, <span class='text-purple'>FBI talep edene kadar</span> kamerları izlemek zorunda değildi.", en: "The security <span class='text-orange'>recording everything</span> didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." }
+            }
+        ];
+
+        // League State Management
+        let currentLeague = 1;
+        let activeQueue = []; // Holds the indices of sentences to test
+        let wrongQueue = [];  // Holds indices of sentences answered incorrectly
+        let currentIndex = 0; // Pointer for activeQueue
+        
+        // Stats
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isEnglishVisible = false;
+
+        // DOM Elements
+        const uiFlashcard = document.getElementById('flashcard-screen');
+        const uiSummary = document.getElementById('summary-screen');
+        const elTurkish = document.getElementById('turkish-text');
+        const elEnglish = document.getElementById('english-text');
+        const elDivider = document.getElementById('divider-line');
+        const containerShowBtn = document.getElementById('btn-show-container');
+        const containerAssessBtns = document.getElementById('assessment-btns');
+        const elProgress = document.getElementById('progress-text');
+        const elBadge = document.getElementById('level-badge');
+
+        // Initialize Application
+        function initApp() {
+            startLeague(1);
+        }
+
+        // Setup a full league (Sentences 1 to 12)
+        function startLeague(leagueNum) {
+            currentLeague = leagueNum;
+            // Populate queue with all 12 sentence indices
+            activeQueue = sentences.map((_, index) => index);
+            resetStatsAndRender();
+        }
+
+        // Setup a review session (Only mistakes)
+        function startReview() {
+            activeQueue = [...wrongQueue];
+            resetStatsAndRender();
+        }
+
+        function resetStatsAndRender() {
+            wrongQueue = [];
+            currentIndex = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            
+            uiSummary.style.display = 'none';
+            uiFlashcard.style.display = 'flex';
+            
+            renderCard();
+        }
+
+        // Render the current flashcard
+        function renderCard() {
+            isEnglishVisible = false;
+            
+            const sentenceId = activeQueue[currentIndex];
+            const data = sentences[sentenceId][`level${currentLeague}`];
+            
+            elBadge.innerText = `League ${currentLeague}`;
+            elProgress.innerText = `Card ${currentIndex + 1} of ${activeQueue.length}`;
+            
+            elTurkish.innerHTML = data.tr;
+            elEnglish.innerHTML = data.en;
+            
+            // Reset visibility
+            elEnglish.style.display = 'none';
+            elDivider.style.display = 'none';
+            containerShowBtn.style.display = 'flex';
+            containerAssessBtns.style.display = 'none';
+        }
+
+        // Reveal the English text
+        function showEnglish() {
+            isEnglishVisible = true;
+            elEnglish.style.display = 'block';
+            elDivider.style.display = 'block';
+            containerShowBtn.style.display = 'none';
+            containerAssessBtns.style.display = 'flex';
+        }
+
+        // Process Correct/Incorrect choice
+        function recordAnswer(isCorrect) {
+            if (isCorrect) {
+                correctCount++;
+            } else {
+                wrongCount++;
+                wrongQueue.push(activeQueue[currentIndex]); // Save for review
+            }
+            
+            currentIndex++;
+            
+            // Check if queue is finished
+            if (currentIndex >= activeQueue.length) {
+                renderSummary();
+            } else {
+                renderCard();
+            }
+        }
+
+        // Render the end-of-league stats
+        function renderSummary() {
+            uiFlashcard.style.display = 'none';
+            uiSummary.style.display = 'block';
+            
+            document.getElementById('summary-title').innerText = `League ${currentLeague} Complete!`;
+            document.getElementById('stat-correct').innerText = correctCount;
+            document.getElementById('stat-wrong').innerText = wrongCount;
+            
+            const total = correctCount + wrongCount;
+            const percent = Math.round((correctCount / total) * 100);
+            document.getElementById('stat-percent').innerText = `${percent}%`;
+
+            // Build dynamic summary buttons
+            const controlsDiv = document.getElementById('summary-controls');
+            controlsDiv.innerHTML = ''; // Clear previous buttons
+
+            // If there are mistakes, show Review button
+            if (wrongCount > 0) {
+                const btnReview = document.createElement('button');
+                btnReview.className = 'btn-review';
+                btnReview.innerText = `Review ${wrongCount} Mistakes`;
+                btnReview.onclick = startReview;
+                controlsDiv.appendChild(btnReview);
+            }
+
+            // Only allow advancing if they scored 100%, OR if you want them to be able to advance anyway
+            // We will let them advance if they are not on the last league
+            if (currentLeague < 3) {
+                const btnAdvance = document.createElement('button');
+                btnAdvance.className = 'btn-advance';
+                btnAdvance.innerText = `Advance to League ${currentLeague + 1}`;
+                btnAdvance.onclick = () => startLeague(currentLeague + 1);
+                controlsDiv.appendChild(btnAdvance);
+            } else if (currentLeague === 3 && wrongCount === 0) {
+                const btnFinish = document.createElement('button');
+                btnFinish.className = 'btn-advance';
+                btnFinish.innerText = `🏆 Mastered Everything! Restart App`;
+                btnFinish.onclick = () => startLeague(1);
+                controlsDiv.appendChild(btnFinish);
+            }
+        }
+
+        // Start app on load
+        window.onload = initApp;
+
+    </script>
+</body>
+</html>
