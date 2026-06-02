@@ -255,10 +255,10 @@
     <div class="header">
         <h1>Grammar League</h1>
         
-        <!-- DECK SELECTOR ADDED HERE -->
+        <!-- DECK SELECTOR -->
         <div class="deck-selector">
             <button class="btn-deck active" id="btn-deck1" onclick="switchDeck('deck1')">Deck 1</button>
-            <button class="btn-deck" id="btn-deck2" onclick="switchDeck('deck2')">Deck 2 (Advanced)</button>
+            <button class="btn-deck" id="btn-deck2" onclick="switchDeck('deck2')">Deck 2</button>
         </div>
 
         <div class="progress" id="progress-text">Initializing...</div>
@@ -266,7 +266,7 @@
             <div><span>↑</span> Show English</div>
             <div><span>←</span> Incorrect</div>
             <div><span>→</span> Correct</div>
-            <div><span>↓</span> Next/Advance</div>
+            <div><span>↓</span> Undo</div>
         </div>
     </div>
 
@@ -315,7 +315,6 @@
     </div>
 
     <script>
-        // DATA STRUCTURE UPDATED TO INCLUDE MULTIPLE DECKS
         const decks = {
             deck1: [
                 {
@@ -566,6 +565,33 @@
             }
         }
 
+        // --- NEW UNDO FUNCTIONALITY ---
+        function undoAction() {
+            // Cannot undo if we are on the first card and haven't answered it yet
+            if (currentIndex === 0 && uiSummary.style.display === 'none') return;
+
+            // If we are on the summary screen, we want to step back to the last card
+            if (uiSummary.style.display !== 'none') {
+                uiSummary.style.display = 'none';
+                uiFlashcard.style.display = 'flex';
+            }
+
+            // Step back one card
+            currentIndex--;
+            const undoneSentenceId = activeQueue[currentIndex];
+
+            // Revert the stats based on what the user previously entered
+            if (wrongQueue.length > 0 && wrongQueue[wrongQueue.length - 1] === undoneSentenceId) {
+                wrongQueue.pop(); // Remove it from the wrong queue
+                wrongCount--;
+            } else {
+                correctCount--;
+            }
+
+            // Render the previous card fresh
+            renderCard();
+        }
+
         function renderSummary() {
             uiFlashcard.style.display = 'none';
             uiSummary.style.display = 'block';
@@ -592,13 +618,13 @@
             if (currentLeague < 3) {
                 const btnAdvance = document.createElement('button');
                 btnAdvance.className = 'btn-advance';
-                btnAdvance.innerText = `Advance to League ${currentLeague + 1} (↓)`;
+                btnAdvance.innerText = `Advance to League ${currentLeague + 1}`;
                 btnAdvance.onclick = () => startLeague(currentLeague + 1);
                 controlsDiv.appendChild(btnAdvance);
             } else if (currentLeague === 3 && wrongCount === 0) {
                 const btnFinish = document.createElement('button');
                 btnFinish.className = 'btn-advance';
-                btnFinish.innerText = `🏆 Mastered Everything! Restart League 1 (↓)`;
+                btnFinish.innerText = `🏆 Mastered Everything! Restart League 1`;
                 btnFinish.onclick = () => startLeague(1);
                 controlsDiv.appendChild(btnFinish);
             }
@@ -606,6 +632,7 @@
 
         function setupKeyboardShortcuts() {
             document.addEventListener('keydown', function(event) {
+                // Flashcard Screen Keybinds
                 if (uiFlashcard.style.display !== 'none') {
                     if (event.key === 'ArrowUp' && !isEnglishVisible) {
                         event.preventDefault(); 
@@ -616,18 +643,16 @@
                     } else if (event.key === 'ArrowLeft' && isEnglishVisible) {
                         event.preventDefault();
                         recordAnswer(false);
+                    } else if (event.key === 'ArrowDown') {
+                        event.preventDefault();
+                        undoAction(); // The new undo assignment
                     }
                 } 
+                // Summary Screen Keybinds
                 else if (uiSummary.style.display !== 'none') {
                     if (event.key === 'ArrowDown') {
                         event.preventDefault();
-                        const advanceBtn = document.querySelector('.btn-advance');
-                        if (advanceBtn) {
-                            advanceBtn.click();
-                        } else {
-                            const reviewBtn = document.querySelector('.btn-review');
-                            if (reviewBtn) reviewBtn.click();
-                        }
+                        undoAction(); // Let them undo even from the summary screen!
                     }
                 }
             });
