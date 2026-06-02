@@ -51,6 +51,23 @@
             color: #7f8c8d;
         }
 
+        .keyboard-hints {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .keyboard-hints span {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
         /* Container for both screens */
         .app-container {
             width: 90%;
@@ -129,6 +146,10 @@
             cursor: pointer;
             transition: background-color 0.2s, transform 0.1s;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         button:active {
@@ -210,6 +231,12 @@
     <div class="header">
         <h1>Grammar League</h1>
         <div class="progress" id="progress-text">Initializing...</div>
+        <div class="keyboard-hints">
+            <div><span>↑</span> Show English</div>
+            <div><span>←</span> Incorrect</div>
+            <div><span>→</span> Correct</div>
+            <div><span>↓</span> Next/Advance</div>
+        </div>
     </div>
 
     <div class="app-container">
@@ -222,12 +249,12 @@
             <div class="english-text" id="english-text"></div>
 
             <div class="controls" id="btn-show-container">
-                <button class="btn-show" onclick="showEnglish()">Show English</button>
+                <button class="btn-show" onclick="showEnglish()">Show English <span>(↑)</span></button>
             </div>
 
             <div class="controls assessment-btns" id="assessment-btns">
-                <button class="btn-wrong" onclick="recordAnswer(false)">❌ Incorrect</button>
-                <button class="btn-correct" onclick="recordAnswer(true)">✅ Correct</button>
+                <button class="btn-wrong" onclick="recordAnswer(false)"><span>(←)</span> ❌ Incorrect</button>
+                <button class="btn-correct" onclick="recordAnswer(true)">✅ Correct <span>(→)</span></button>
             </div>
         </div>
 
@@ -260,8 +287,8 @@
         const sentences = [
             {
                 level1: { tr: "Müdür projeyi inceliyordu.", en: "The manager was examining the project." },
-                level2: { tr: "Müdür projeyi <span class='text-purple'>Genel merkeze yollamak için</span> inceliyordu.", en: "The manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." },
-                level3: { tr: "<span class='text-orange'>Atanan</span> Müdür projeyi <span class='text-purple'>Genel merkeze yollamak için</span> inceliyordu.", en: "The <span class='text-orange'>assigned</span> manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." }
+                level2: { tr: "Müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." },
+                level3: { tr: "<span class='text-orange'>Atanan</span> Müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The <span class='text-orange'>assigned</span> manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." }
             },
             {
                 level1: { tr: "Taksici müşteriyi beklemedi.", en: "The taxi driver didn't wait for the customer." },
@@ -322,9 +349,9 @@
 
         // League State Management
         let currentLeague = 1;
-        let activeQueue = []; // Holds the indices of sentences to test
-        let wrongQueue = [];  // Holds indices of sentences answered incorrectly
-        let currentIndex = 0; // Pointer for activeQueue
+        let activeQueue = []; 
+        let wrongQueue = [];  
+        let currentIndex = 0; 
         
         // Stats
         let correctCount = 0;
@@ -345,17 +372,17 @@
         // Initialize Application
         function initApp() {
             startLeague(1);
+            setupKeyboardShortcuts();
         }
 
-        // Setup a full league (Sentences 1 to 12)
+        // Setup a full league
         function startLeague(leagueNum) {
             currentLeague = leagueNum;
-            // Populate queue with all 12 sentence indices
             activeQueue = sentences.map((_, index) => index);
             resetStatsAndRender();
         }
 
-        // Setup a review session (Only mistakes)
+        // Setup a review session
         function startReview() {
             activeQueue = [...wrongQueue];
             resetStatsAndRender();
@@ -386,7 +413,6 @@
             elTurkish.innerHTML = data.tr;
             elEnglish.innerHTML = data.en;
             
-            // Reset visibility
             elEnglish.style.display = 'none';
             elDivider.style.display = 'none';
             containerShowBtn.style.display = 'flex';
@@ -408,12 +434,11 @@
                 correctCount++;
             } else {
                 wrongCount++;
-                wrongQueue.push(activeQueue[currentIndex]); // Save for review
+                wrongQueue.push(activeQueue[currentIndex]); 
             }
             
             currentIndex++;
             
-            // Check if queue is finished
             if (currentIndex >= activeQueue.length) {
                 renderSummary();
             } else {
@@ -434,11 +459,9 @@
             const percent = Math.round((correctCount / total) * 100);
             document.getElementById('stat-percent').innerText = `${percent}%`;
 
-            // Build dynamic summary buttons
             const controlsDiv = document.getElementById('summary-controls');
-            controlsDiv.innerHTML = ''; // Clear previous buttons
+            controlsDiv.innerHTML = ''; 
 
-            // If there are mistakes, show Review button
             if (wrongCount > 0) {
                 const btnReview = document.createElement('button');
                 btnReview.className = 'btn-review';
@@ -447,23 +470,55 @@
                 controlsDiv.appendChild(btnReview);
             }
 
-            // Let them advance if they are not on the last league
             if (currentLeague < 3) {
                 const btnAdvance = document.createElement('button');
                 btnAdvance.className = 'btn-advance';
-                btnAdvance.innerText = `Advance to League ${currentLeague + 1}`;
+                btnAdvance.innerText = `Advance to League ${currentLeague + 1} (↓)`;
                 btnAdvance.onclick = () => startLeague(currentLeague + 1);
                 controlsDiv.appendChild(btnAdvance);
             } else if (currentLeague === 3 && wrongCount === 0) {
                 const btnFinish = document.createElement('button');
                 btnFinish.className = 'btn-advance';
-                btnFinish.innerText = `🏆 Mastered Everything! Restart App`;
+                btnFinish.innerText = `🏆 Mastered Everything! Restart App (↓)`;
                 btnFinish.onclick = () => startLeague(1);
                 controlsDiv.appendChild(btnFinish);
             }
         }
 
-        // Start app on load
+        // Keyboard Event Listener Logic
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', function(event) {
+                // If on the Flashcard Screen
+                if (uiFlashcard.style.display !== 'none') {
+                    if (event.key === 'ArrowUp' && !isEnglishVisible) {
+                        event.preventDefault(); // Prevents scrolling
+                        showEnglish();
+                    } else if (event.key === 'ArrowRight' && isEnglishVisible) {
+                        event.preventDefault();
+                        recordAnswer(true);
+                    } else if (event.key === 'ArrowLeft' && isEnglishVisible) {
+                        event.preventDefault();
+                        recordAnswer(false);
+                    }
+                } 
+                // If on the Summary Screen
+                else if (uiSummary.style.display !== 'none') {
+                    if (event.key === 'ArrowDown') {
+                        event.preventDefault();
+                        // Find the primary advance button if it exists
+                        const advanceBtn = document.querySelector('.btn-advance');
+                        if (advanceBtn) {
+                            advanceBtn.click();
+                        } else {
+                            // If they MUST review, down arrow clicks review
+                            const reviewBtn = document.querySelector('.btn-review');
+                            if (reviewBtn) reviewBtn.click();
+                        }
+                    }
+                }
+            });
+        }
+
         window.onload = initApp;
 
     </script>
