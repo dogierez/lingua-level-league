@@ -255,6 +255,7 @@
     <div class="header">
         <h1>Grammar League</h1>
         
+        <!-- DECK SELECTOR ADDED HERE -->
         <div class="deck-selector">
             <button class="btn-deck active" id="btn-deck1" onclick="switchDeck('deck1')">Deck 1</button>
             <button class="btn-deck" id="btn-deck2" onclick="switchDeck('deck2')">Deck 2 (Advanced)</button>
@@ -314,6 +315,7 @@
     </div>
 
     <script>
+        // DATA STRUCTURE UPDATED TO INCLUDE MULTIPLE DECKS
         const decks = {
             deck1: [
                 {
@@ -369,7 +371,7 @@
                 {
                     level1: { tr: "Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables." },
                     level2: { tr: "Manav, <span class='text-purple'>müşteriler vardığında</span> sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers arrived</span>." },
-                    level3: { tr: "Manav, <span class='text-purple'></span><span class='text-orange'>para harcayan</span><span class='text-purple'> müşteriler vardığında</span> sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the </span><span class='text-orange'>spending money</span><span class='text-purple'> customers arrived</span>." }
+                    level3: { tr: "Manav, <span class='text-orange'>para harcayan</span> <span class='text-purple'>müşteriler vardığında</span> sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the </span><span class='text-orange'>spending money</span><span class='text-purple'> customers arrived</span>." }
                 },
                 {
                     level1: { tr: "Güvenlik kameraları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras." },
@@ -396,7 +398,7 @@
                 {
                     level1: { tr: "Çocuk topu fırlatırdı.", en: "The boy used to throw the ball." },
                     level2: { tr: "Çocuk topu <span class='text-purple'>köpek koşabilsin diye</span> fırlatırdı.", en: "The boy used to throw the ball <span class='text-purple'>so that the dog could run</span>." },
-                    level3: { tr: "Çocuk topu <span class='text-purple'></span><span class='text-orange'>havlayan</span><span class='text-purple'> köpek koşabilsin diye</span> fırlatırdı.", en: "The boy used to throw the ball <span class='text-purple'>so that the </span><span class='text-orange'>barking</span><span class='text-purple'> dog could run</span>." }
+                    level3: { tr: "Çocuk topu <span class='text-orange'>havlayan</span> <span class='text-purple'>köpek koşabilsin diye</span> fırlatırdı.", en: "The boy used to throw the ball <span class='text-purple'>so that the </span><span class='text-orange'>barking</span><span class='text-purple'> dog could run</span>." }
                 },
                 {
                     level1: { tr: "Patron sözleşmeyi imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract." },
@@ -411,7 +413,7 @@
                 {
                     level1: { tr: "Yatırımcı hisseleri satamadı.", en: "The investor couldn't sell the stocks." },
                     level2: { tr: "Yatırımcı hisseleri <span class='text-purple'>piyasalar çökerken</span> satamadı.", en: "The investor couldn't sell the stocks <span class='text-purple'>while the markets were crashing</span>." },
-                    level3: { tr: "Yatırımcı hisseleri <span class='text-purple'></span><span class='text-orange'>panikleyen</span><span class='text-purple'> piyasalar çökerken</span> satamadı.", en: "The investor couldn't sell the stocks <span class='text-purple'>while the </span><span class='text-orange'>panicking</span><span class='text-purple'> markets were crashing</span>." }
+                    level3: { tr: "Yatırımcı hisseleri <span class='text-orange'>panikleyen</span> <span class='text-purple'>piyasalar çökerken</span> satamadı.", en: "The investor couldn't sell the stocks <span class='text-purple'>while the </span><span class='text-orange'>panicking</span><span class='text-purple'> markets were crashing</span>." }
                 },
                 {
                     level1: { tr: "Kahraman kötü adamı durdurmuştu.", en: "The hero had stopped the villain." },
@@ -431,7 +433,7 @@
                 {
                     level1: { tr: "Öğretmen kağıtları dağıtıyordu.", en: "The teacher was distributing the papers." },
                     level2: { tr: "Öğretmen kağıtları <span class='text-purple'>zil çaldığında</span> dağıtıyordu.", en: "The teacher was distributing the papers <span class='text-purple'>when the bell rang</span>." },
-                    level3: { tr: "Öğretmen kağıtları <span class='text-purple'></span><span class='text-orange'>bitişi işaret eden</span><span class='text-purple'> zil çaldığında</span> dağıtıyordu.", en: "The teacher was distributing the papers <span class='text-purple'>when the bell </span><span class='text-orange'>signaling the end</span><span class='text-purple'> rang</span>." }
+                    level3: { tr: "Öğretmen kağıtları <span class='text-orange'>bitişi işaret eden</span> <span class='text-purple'>zil çaldığında</span> dağıtıyordu.", en: "The teacher was distributing the papers <span class='text-purple'>when the bell </span><span class='text-orange'>signaling the end</span><span class='text-purple'> rang</span>." }
                 },
                 {
                     level1: { tr: "Geliştirici uygulamayı güncelleyemedi.", en: "The developer couldn't update the app." },
