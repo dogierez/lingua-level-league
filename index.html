@@ -39,6 +39,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            position: relative;
         }
 
         .header {
@@ -56,17 +57,18 @@
 
         .deck-selector {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .btn-deck {
             background-color: var(--deck-inactive);
             color: white;
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 20px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             border: none;
             cursor: pointer;
             font-weight: bold;
@@ -90,6 +92,7 @@
             display: flex;
             gap: 15px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .keyboard-hints span {
@@ -131,7 +134,7 @@
 
         .turkish-text, .english-text {
             font-size: 1.4rem;
-            line-height: 1.5;
+            line-height: 1.6;
             font-weight: 500;
             min-height: 60px;
         }
@@ -144,6 +147,18 @@
         .text-orange {
             color: var(--orange-highlight);
             font-weight: 700;
+        }
+
+        /* Dictionary Word Styling */
+        .dict-word {
+            cursor: pointer;
+            border-bottom: 2px dotted var(--btn-primary);
+            transition: background-color 0.2s;
+            border-radius: 2px;
+        }
+
+        .dict-word:hover {
+            background-color: #e3f2fd;
         }
 
         .divider-line {
@@ -249,9 +264,35 @@
 
         .btn-review { background-color: var(--btn-wrong); }
         .btn-review:hover { background-color: var(--btn-wrong-hover); }
-
         .btn-advance { background-color: var(--btn-advance); }
         .btn-advance:hover { background-color: var(--btn-advance-hover); }
+
+        /* Floating Tooltip styling */
+        .tooltip-dict {
+            position: absolute;
+            display: none;
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            z-index: 1000;
+            pointer-events: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transform: translateX(-50%);
+        }
+
+        .tooltip-dict::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #2c3e50 transparent transparent transparent;
+        }
 
     </style>
 </head>
@@ -263,6 +304,7 @@
         <div class="deck-selector">
             <button class="btn-deck active" id="btn-deck1" onclick="switchDeck('deck1')">Deck 1</button>
             <button class="btn-deck" id="btn-deck2" onclick="switchDeck('deck2')">Deck 2</button>
+            <button class="btn-deck" id="btn-deck3" onclick="switchDeck('deck3')">Deck 3</button>
         </div>
 
         <div class="progress" id="progress-text">Initializing...</div>
@@ -310,70 +352,83 @@
                 </div>
             </div>
 
-            <div class="summary-controls" id="summary-controls">
-                </div>
+            <div class="summary-controls" id="summary-controls"></div>
         </div>
     </div>
+
+    <div id="tooltip-dict" class="tooltip-dict"></div>
 
     <script>
         const decks = {
             deck1: [
                 {
+                    vocab: { "müdür": "manager", "projeyi": "project", "inceliyordu": "examining", "genel": "general", "merkeze": "headquarters", "yollamak": "send", "atanan": "assigned" },
                     level1: { tr: "Müdür projeyi inceliyordu.", en: "The manager was examining the project." },
                     level2: { tr: "Müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." },
                     level3: { tr: "<span class='text-orange'>Atanan</span> Müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The <span class='text-orange'>assigned</span> manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." }
                 },
                 {
+                    vocab: { "taksici": "taxi driver", "müşteriyi": "customer", "beklemedi": "wait", "sarhoş": "drunk", "bağıran": "shouting" },
                     level1: { tr: "Taksici müşteriyi beklemedi.", en: "The taxi driver didn't wait for the customer." },
                     level2: { tr: "Taksici müşteriyi <span class='text-purple'>müşteri sarhoş olduğundan dolayı</span> beklemedi.", en: "The taxi driver didn't wait for the customer <span class='text-purple'>because the customer was drunk</span>." },
                     level3: { tr: "Taksici <span class='text-orange'>bağıran</span> müşteriyi <span class='text-purple'>müşteri sarhoş olduğundan dolayı</span> beklemedi.", en: "The taxi driver didn't wait for the <span class='text-orange'>shouting</span> customer <span class='text-purple'>because the customer was drunk</span>." }
                 },
                 {
+                    vocab: { "bankacı": "banker", "hesapları": "accounts", "kontrol": "check", "etmişti": "checked", "yapay": "artificial", "zeka": "intelligence", "kullanarak": "using", "çağrılan": "called" },
                     level1: { tr: "Bankacı hesapları kontrol etmişti.", en: "The banker had checked the accounts." },
                     level2: { tr: "Bankacı hesapları <span class='text-purple'>Yapay Zeka kullanarak</span> kontrol etmişti.", en: "The banker had checked the accounts <span class='text-purple'>by using Artificial Intelligence</span>." },
                     level3: { tr: "<span class='text-orange'>Çağrılan</span> Bankacı hesapları <span class='text-purple'>Yapay Zeka kullanarak</span> kontrol etmişti.", en: "The <span class='text-orange'>called</span> banker had checked the accounts <span class='text-purple'>by using Artificial Intelligence</span>." }
                 },
                 {
+                    vocab: { "kasap": "butcher", "etleri": "meat", "doğrardı": "chop", "kadınlar": "women", "mangal": "barbecue", "bekleyen": "waiting" },
                     level1: { tr: "Kasap etleri doğrardı.", en: "The butcher used to chop the meat." },
                     level2: { tr: "Kasap <span class='text-purple'>kadınlar mangal yapabilsin diye</span> etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the women could barbecue</span>." },
                     level3: { tr: "Kasap <span class='text-orange'>bekleyen</span> <span class='text-purple'>kadınlar mangal yapabilsin diye</span> etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the </span><span class='text-orange'>waiting</span><span class='text-purple'> women could barbecue</span>." }
                 },
                 {
+                    vocab: { "pilot": "pilot", "kokpiti": "cockpit", "düzenliyor": "organizing", "düzgün": "proper", "şekilde": "way", "tamir": "repaired", "edilen": "repaired" },
                     level1: { tr: "Pilot kokpiti düzenliyor.", en: "The pilot is organizing the cockpit." },
                     level2: { tr: "Pilot kokpiti <span class='text-purple'>düzgün bir şekilde</span> düzenliyor.", en: "The pilot is organizing the cockpit <span class='text-purple'>in a proper way</span>." },
                     level3: { tr: "Pilot <span class='text-orange'>tamir edilen</span> kokpiti <span class='text-purple'>düzgün bir şekilde</span> düzenliyor.", en: "The pilot is organizing the <span class='text-orange'>repaired</span> cockpit <span class='text-purple'>in a proper way</span>." }
                 },
                 {
+                    vocab: { "kutuları": "boxes", "açtı": "opened", "müşteriler": "customers", "gelene": "arrived", "teslim": "delivered", "edilen": "delivered" },
                     level1: { tr: "Birisi kutuları açtı.", en: "Somebody opened the boxes." },
                     level2: { tr: "Birisi kutuları <span class='text-purple'>müşteriler gelene kadar</span> açtı.", en: "Somebody opened the boxes <span class='text-purple'>until the customers arrived</span>." },
                     level3: { tr: "Birisi <span class='text-orange'>teslim edilen</span> kutuları <span class='text-purple'>müşteriler gelene kadar</span> açtı.", en: "Somebody opened the <span class='text-orange'>delivered</span> boxes <span class='text-purple'>until the customers arrived</span>." }
                 },
                 {
-                    level1: { tr: "Sürücü forklifti Park edemedi.", en: "The driver couldn't park the forklift." },
+                    vocab: { "sürücü": "driver", "müşteriler": "customers", "alışveriş": "shopping", "yaparken": "shopping", "forklifti": "forklift", "park": "park", "edemedi": "park", "acele": "hurrying", "eden": "hurrying" },
+                    level1: { tr: "Sürücü forklifti park edemedi.", en: "The driver couldn't park the forklift." },
                     level2: { tr: "Sürücü, <span class='text-purple'>müşteriler alışveriş yaparken</span> forklifti park edemedi.", en: "The driver couldn't park the forklift <span class='text-purple'>while the customers were shopping</span>." },
                     level3: { tr: "<span class='text-orange'>Acele eden</span> sürücü, <span class='text-purple'>müşteriler alışveriş yaparken</span> forklifti park edemedi.", en: "The <span class='text-orange'>hurrying</span> driver couldn't park the forklift <span class='text-purple'>while the customers were shopping</span>." }
                 },
                 {
+                    vocab: { "koruma": "bodyguard", "iş": "business", "adamını": "man", "uyarmak": "warn", "cep": "mobile", "telefonunu": "phone", "kullandı": "used", "silah": "weapon", "taşıyan": "carrying" },
                     level1: { tr: "Koruma iş adamını uyarmak zorundaydı.", en: "The bodyguard had to warn the businessman." },
                     level2: { tr: "Koruma iş adamını uyarmak zorundaydı, <span class='text-purple'>bu yüzden cep telefonunu kullandı</span>.", en: "The bodyguard had to warn the businessman, <span class='text-purple'>so he used his mobile phone</span>." },
                     level3: { tr: "<span class='text-orange'>Silah taşıyan</span> koruma iş adamını uyarmak zorundaydı, <span class='text-purple'>bu yüzden cep telefonunu kullandı</span>.", en: "The bodyguard <span class='text-orange'>carrying a weapon</span> had to warn the businessman, <span class='text-purple'>so he used his mobile phone</span>." }
                 },
                 {
+                    vocab: { "barista": "barista", "kahveleri": "coffees", "hazırlamalı": "prepare", "müşteriler": "customers", "oturmadan": "sit", "yönetim": "management", "uyarılan": "warned" },
                     level1: { tr: "Barista kahveleri hazırlamalı.", en: "The barista should prepare the coffees." },
                     level2: { tr: "Barista kahveleri <span class='text-purple'>müşteriler oturmadan önce</span> hazırlamalı.", en: "The barista should prepare the coffees <span class='text-purple'>before the customers sit down</span>." },
                     level3: { tr: "<span class='text-orange'>Yönetim tarafından uyarılan</span> barista kahveleri <span class='text-purple'>müşteriler oturmadan önce</span> hazırlamalı.", en: "The barista <span class='text-orange'>warned by the management</span> should prepare the coffees <span class='text-purple'>before the customers sit down</span>." }
                 },
                 {
+                    vocab: { "doktor": "doctor", "hastayı": "patient", "tedavi": "treat", "edecek": "treat", "şeye": "everything", "rağmen": "despite", "polis": "police", "vurulan": "shot" },
                     level1: { tr: "Doktor hastayı tedavi edecek.", en: "The doctor will treat the patient." },
                     level2: { tr: "Doktor hastayı <span class='text-purple'>her şeye rağmen</span> tedavi edecek.", en: "The doctor will treat the patient <span class='text-purple'>despite everything</span>." },
                     level3: { tr: "Doktor <span class='text-orange'>polis tarafından vurulan</span> hastayı <span class='text-purple'>her şeye rağmen</span> tedavi edecek.", en: "The doctor will treat the patient <span class='text-orange'>shot by the police</span> <span class='text-purple'>despite everything</span>." }
                 },
                 {
+                    vocab: { "manav": "green grocer", "sebzeleri": "vegetables", "tartamamıştı": "weigh", "müşteriler": "customers", "vardığında": "arrived", "para": "money", "harcayan": "spending" },
                     level1: { tr: "Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables." },
                     level2: { tr: "Manav, <span class='text-purple'>müşteriler vardığında</span> sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers arrived</span>." },
                     level3: { tr: "Manav, <span class='text-orange'>para harcayan</span> <span class='text-purple'>müşteriler vardığında</span> sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the </span><span class='text-orange'>spending money</span><span class='text-purple'> customers arrived</span>." }
                 },
                 {
+                    vocab: { "güvenlik": "security", "kameraları": "cameras", "izlemek": "watch", "talep": "request", "edene": "requested", "kaydeden": "recording" },
                     level1: { tr: "Güvenlik kameraları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras." },
                     level2: { tr: "Güvenlik, kameraları <span class='text-purple'>FBI talep edene kadar</span> izlemek zorunda değildi.", en: "The security didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." },
                     level3: { tr: "<span class='text-orange'>Her şeyi kaydeden</span> güvenlik, kameraları <span class='text-purple'>FBI talep edene kadar</span> izlemek zorunda değildi.", en: "The security <span class='text-orange'>recording everything</span> didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." }
@@ -381,81 +436,164 @@
             ],
             deck2: [
                 {
+                    vocab: { "sürücü": "driver", "arabayı": "car", "kiralıyordu": "renting", "avrupayı": "europe", "gezmek": "travel", "heyecanlanan": "excited" },
                     level1: { tr: "Sürücü arabayı kiralıyordu.", en: "The driver was renting the car." },
                     level2: { tr: "Sürücü arabayı <span class='text-purple'>Avrupa'yı gezmek için</span> kiralıyordu.", en: "The driver was renting the car <span class='text-purple'>in order to travel across Europe</span>." },
                     level3: { tr: "<span class='text-orange'>Heyecanlanan</span> sürücü arabayı <span class='text-purple'>Avrupa'yı gezmek için</span> kiralıyordu.", en: "The <span class='text-orange'>excited</span> driver was renting the car <span class='text-purple'>in order to travel across Europe</span>." }
                 },
                 {
+                    vocab: { "tamirci": "mechanic", "motosikleti": "motorcycle", "test": "test", "edemedi": "test", "hava": "weather", "yağmurlu": "rainy", "tamir": "repaired", "edilen": "repaired" },
                     level1: { tr: "Tamirci motosikleti test edemedi.", en: "The mechanic couldn't test the motorcycle." },
                     level2: { tr: "Tamirci motosikleti <span class='text-purple'>hava yağmurlu olduğundan dolayı</span> test edemedi.", en: "The mechanic couldn't test the motorcycle <span class='text-purple'>because the weather was rainy</span>." },
                     level3: { tr: "Tamirci <span class='text-orange'>tamir edilen</span> motosikleti <span class='text-purple'>hava yağmurlu olduğundan dolayı</span> test edemedi.", en: "The mechanic couldn't test the <span class='text-orange'>repaired</span> motorcycle <span class='text-purple'>because the weather was rainy</span>." }
                 },
                 {
+                    vocab: { "teknik": "coach", "direktör": "coach", "oyuncuları": "players", "maç": "match", "videolarını": "videos", "izleyerek": "watching", "analiz": "analyzed", "etmişti": "analyzed", "yeni": "newly", "işe": "hired", "alınan": "hired" },
                     level1: { tr: "Teknik direktör oyuncuları analiz etmişti.", en: "The coach had analyzed the players." },
                     level2: { tr: "Teknik direktör oyuncuları <span class='text-purple'>maç videolarını izleyerek</span> analiz etmişti.", en: "The coach had analyzed the players <span class='text-purple'>by watching the match videos</span>." },
                     level3: { tr: "<span class='text-orange'>Yeni işe alınan</span> teknik direktör oyuncuları <span class='text-purple'>maç videolarını izleyerek</span> analiz etmişti.", en: "The <span class='text-orange'>newly hired</span> coach had analyzed the players <span class='text-purple'>by watching the match videos</span>." }
                 },
                 {
+                    vocab: { "çocuk": "boy", "topu": "ball", "fırlatırdı": "throw", "köpek": "dog", "koşabilsin": "run", "havlayan": "barking" },
                     level1: { tr: "Çocuk topu fırlatırdı.", en: "The boy used to throw the ball." },
                     level2: { tr: "Çocuk topu <span class='text-purple'>köpek koşabilsin diye</span> fırlatırdı.", en: "The boy used to throw the ball <span class='text-purple'>so that the dog could run</span>." },
                     level3: { tr: "Çocuk topu <span class='text-orange'>havlayan</span> <span class='text-purple'>köpek koşabilsin diye</span> fırlatırdı.", en: "The boy used to throw the ball <span class='text-purple'>so that the </span><span class='text-orange'>barking</span><span class='text-purple'> dog could run</span>." }
                 },
                 {
+                    vocab: { "patron": "boss", "sözleşmeyi": "contract", "imzalamak": "sign", "hızlı": "quick", "şekilde": "way", "hazırlanan": "prepared" },
                     level1: { tr: "Patron sözleşmeyi imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract." },
                     level2: { tr: "Patron sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract <span class='text-purple'>in a quick way</span>." },
                     level3: { tr: "Patron <span class='text-orange'>hazırlanan</span> sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didn't have to sign the <span class='text-orange'>prepared</span> contract <span class='text-purple'>in a quick way</span>." }
                 },
                 {
+                    vocab: { "genç": "teenager", "scooterı": "scooter", "arkadaşları": "friends", "gelene": "arrived", "şarj": "charging", "ediyordu": "charging", "kiralanan": "rented" },
                     level1: { tr: "Genç scooter'ı şarj ediyordu.", en: "The teenager was charging the scooter." },
                     level2: { tr: "Genç scooter'ı <span class='text-purple'>arkadaşları gelene kadar</span> şarj ediyordu.", en: "The teenager was charging the scooter <span class='text-purple'>until his friends arrived</span>." },
                     level3: { tr: "Genç <span class='text-orange'>kiralanan</span> scooter'ı <span class='text-purple'>arkadaşları gelene kadar</span> şarj ediyordu.", en: "The teenager was charging the <span class='text-orange'>rented</span> scooter <span class='text-purple'>until his friends arrived</span>." }
                 },
                 {
+                    vocab: { "yatırımcı": "investor", "hisseleri": "stocks", "piyasalar": "markets", "çökerken": "crashing", "satamadı": "sell", "panikleyen": "panicking" },
                     level1: { tr: "Yatırımcı hisseleri satamadı.", en: "The investor couldn't sell the stocks." },
                     level2: { tr: "Yatırımcı hisseleri <span class='text-purple'>piyasalar çökerken</span> satamadı.", en: "The investor couldn't sell the stocks <span class='text-purple'>while the markets were crashing</span>." },
                     level3: { tr: "Yatırımcı hisseleri <span class='text-orange'>panikleyen</span> <span class='text-purple'>piyasalar çökerken</span> satamadı.", en: "The investor couldn't sell the stocks <span class='text-purple'>while the </span><span class='text-orange'>panicking</span><span class='text-purple'> markets were crashing</span>." }
                 },
                 {
+                    vocab: { "kahraman": "hero", "kötü": "bad", "adamı": "man", "polis": "police", "gelmeden": "arrived", "durdurmuştu": "stopped", "pelerin": "cape", "takan": "wearing" },
                     level1: { tr: "Kahraman kötü adamı durdurmuştu.", en: "The hero had stopped the villain." },
                     level2: { tr: "Kahraman kötü adamı <span class='text-purple'>polis gelmeden önce</span> durdurmuştu.", en: "The hero had stopped the villain <span class='text-purple'>before the police arrived</span>." },
                     level3: { tr: "<span class='text-orange'>Pelerin takan</span> kahraman kötü adamı <span class='text-purple'>polis gelmeden önce</span> durdurmuştu.", en: "The hero <span class='text-orange'>wearing a cape</span> had stopped the villain <span class='text-purple'>before the police arrived</span>." }
                 },
                 {
+                    vocab: { "öğrenci": "student", "kelimeleri": "vocabulary", "sınav": "exam", "başlamadan": "started", "ezberlerdi": "memorize", "öğretmen": "teacher", "uyarılan": "warned" },
                     level1: { tr: "Öğrenci kelimeleri ezberlerdi.", en: "The student used to memorize the vocabulary." },
                     level2: { tr: "Öğrenci kelimeleri <span class='text-purple'>sınav başlamadan önce</span> ezberlerdi.", en: "The student used to memorize the vocabulary <span class='text-purple'>before the exam started</span>." },
                     level3: { tr: "<span class='text-orange'>Öğretmen tarafından uyarılan</span> öğrenci kelimeleri <span class='text-purple'>sınav başlamadan önce</span> ezberlerdi.", en: "The student <span class='text-orange'>warned by the teacher</span> used to memorize the vocabulary <span class='text-purple'>before the exam started</span>." }
                 },
                 {
+                    vocab: { "sporcu": "athlete", "yemeği": "meal", "yemek": "eat", "sıkı": "strict", "diyete": "diet", "şef": "chef", "pişirilen": "cooked" },
                     level1: { tr: "Sporcu yemeği yemek zorunda değildi.", en: "The athlete didn't have to eat the meal." },
                     level2: { tr: "Sporcu yemeği <span class='text-purple'>sıkı diyete rağmen</span> yemek zorunda değildi.", en: "The athlete didn't have to eat the meal <span class='text-purple'>despite the strict diet</span>." },
                     level3: { tr: "Sporcu <span class='text-orange'>şef tarafından pişirilen</span> yemeği <span class='text-purple'>sıkı diyete rağmen</span> yemek zorunda değildi.", en: "The athlete didn't have to eat the meal <span class='text-orange'>cooked by the chef</span> <span class='text-purple'>despite the strict diet</span>." }
                 },
                 {
+                    vocab: { "öğretmen": "teacher", "kağıtları": "papers", "zil": "bell", "çaldığında": "rang", "dağıtıyordu": "distributing", "bitişi": "end", "işaret": "signaling", "eden": "signaling" },
                     level1: { tr: "Öğretmen kağıtları dağıtıyordu.", en: "The teacher was distributing the papers." },
                     level2: { tr: "Öğretmen kağıtları <span class='text-purple'>zil çaldığında</span> dağıtıyordu.", en: "The teacher was distributing the papers <span class='text-purple'>when the bell rang</span>." },
                     level3: { tr: "Öğretmen kağıtları <span class='text-orange'>bitişi işaret eden</span> <span class='text-purple'>zil çaldığında</span> dağıtıyordu.", en: "The teacher was distributing the papers <span class='text-purple'>when the bell </span><span class='text-orange'>signaling the end</span><span class='text-purple'> rang</span>." }
                 },
                 {
+                    vocab: { "geliştirici": "developer", "uygulamayı": "app", "kullanıcılar": "users", "şikayet": "complained", "edene": "complained", "güncelleyemedi": "update", "bütün": "all", "gece": "night", "kod": "coding", "yazan": "coding" },
                     level1: { tr: "Geliştirici uygulamayı güncelleyemedi.", en: "The developer couldn't update the app." },
                     level2: { tr: "Geliştirici uygulamayı <span class='text-purple'>kullanıcılar şikayet edene kadar</span> güncelleyemedi.", en: "The developer couldn't update the app <span class='text-purple'>until the users complained</span>." },
                     level3: { tr: "<span class='text-orange'>Bütün gece kod yazan</span> geliştirici uygulamayı <span class='text-purple'>kullanıcılar şikayet edene kadar</span> güncelleyemedi.", en: "The developer <span class='text-orange'>coding all night</span> couldn't update the app <span class='text-purple'>until the users complained</span>." }
                 }
+            ],
+            deck3: [
+                {
+                    vocab: { "gezgin": "traveler", "restoran": "restaurant", "bulmak": "find", "şehri": "city", "keşfediyordu": "exploring", "sırt": "backpack", "çantası": "backpack", "taşıyan": "carrying" },
+                    level1: { tr: "Gezgin şehri keşfediyordu.", en: "The traveler was exploring the city." },
+                    level2: { tr: "Gezgin <span class='text-purple'>iyi bir restoran bulmak için</span> şehri keşfediyordu.", en: "The traveler was exploring the city <span class='text-purple'>to find a good restaurant</span>." },
+                    level3: { tr: "<span class='text-orange'>Sırt çantası taşıyan</span> gezgin <span class='text-purple'>iyi bir restoran bulmak için</span> şehri keşfediyordu.", en: "The traveler <span class='text-orange'>carrying a backpack</span> was exploring the city <span class='text-purple'>to find a good restaurant</span>." }
+                },
+                {
+                    vocab: { "öğrenci": "student", "bilgisayar": "computer", "çöktüğü": "crashed", "öğretmen": "teacher", "verilen": "assigned", "ödevi": "homework", "bitiremedi": "finish" },
+                    level1: { tr: "Öğrenci ödevi bitiremedi.", en: "The student couldn't finish the homework." },
+                    level2: { tr: "Öğrenci <span class='text-purple'>bilgisayar çöktüğü için</span> ödevi bitiremedi.", en: "The student couldn't finish the homework <span class='text-purple'>because the computer crashed</span>." },
+                    level3: { tr: "Öğrenci <span class='text-purple'>bilgisayar çöktüğü için</span> <span class='text-orange'>öğretmen tarafından verilen</span> ödevi bitiremedi.", en: "The student couldn't finish the homework <span class='text-orange'>assigned by the teacher</span> <span class='text-purple'>because the computer crashed</span>." }
+                },
+                {
+                    vocab: { "hakem": "referee", "ekranını": "screen", "kontrol": "checked", "ettikten": "checked", "golü": "goal", "iptal": "cancelled", "etmişti": "cancelled", "tekrarı": "replay", "izleyen": "watching" },
+                    level1: { tr: "Hakem golü iptal etmişti.", en: "The referee had cancelled the goal." },
+                    level2: { tr: "Hakem <span class='text-purple'>VAR ekranını kontrol ettikten sonra</span> golü iptal etmişti.", en: "The referee had cancelled the goal <span class='text-purple'>after he checked the VAR screen</span>." },
+                    level3: { tr: "<span class='text-orange'>Tekrarı izleyen</span> hakem <span class='text-purple'>VAR ekranını kontrol ettikten sonra</span> golü iptal etmişti.", en: "The referee <span class='text-orange'>watching the replay</span> had cancelled the goal <span class='text-purple'>after he checked the VAR screen</span>." }
+                },
+                {
+                    vocab: { "sporcu": "athlete", "diyet": "diet", "uygulayan": "following", "yağ": "fat", "yakabilmek": "burn", "kahvaltıyı": "breakfast", "atlardı": "skip" },
+                    level1: { tr: "Sporcu kahvaltıyı atlardı.", en: "The athlete used to skip breakfast." },
+                    level2: { tr: "Sporcu <span class='text-purple'>daha fazla yağ yakabilmek için</span> kahvaltıyı atlardı.", en: "The athlete used to skip breakfast <span class='text-purple'>so that he could burn more fat</span>." },
+                    level3: { tr: "<span class='text-orange'>Sıkı bir diyet uygulayan</span> sporcu <span class='text-purple'>daha fazla yağ yakabilmek için</span> kahvaltıyı atlardı.", en: "The athlete <span class='text-orange'>following a strict diet</span> used to skip breakfast <span class='text-purple'>so that he could burn more fat</span>." }
+                },
+                {
+                    vocab: { "batarya": "battery", "dolu": "full", "genç": "teenager", "güçlü": "powerful", "motorla": "motor", "donatılmış": "equipped", "scooterı": "scooter", "itmek": "push" },
+                    level1: { tr: "Genç scooter'ı itmek zorunda değildi.", en: "The teenager didn't have to push the scooter." },
+                    level2: { tr: "Genç, <span class='text-purple'>batarya dolu olduğundan dolayı</span> scooter'ı itmek zorunda değildi.", en: "The teenager didn't have to push the scooter <span class='text-purple'>since the battery was full</span>." },
+                    level3: { tr: "Genç, <span class='text-purple'>batarya dolu olduğundan dolayı</span> <span class='text-orange'>güçlü bir motorla donatılmış</span> scooter'ı itmek zorunda değildi.", en: "The teenager didn't have to push the scooter <span class='text-orange'>equipped with a powerful motor</span> <span class='text-purple'>since the battery was full</span>." }
+                },
+                {
+                    vocab: { "müşteri": "customer", "aradığında": "called", "tamirci": "mechanic", "hasar": "damage", "gören": "damaged", "lastikleri": "tires", "değiştiriyordu": "changing" },
+                    level1: { tr: "Tamirci lastikleri değiştiriyordu.", en: "The mechanic was changing the tires." },
+                    level2: { tr: "Tamirci <span class='text-purple'>müşteri aradığında</span> lastikleri değiştiriyordu.", en: "The mechanic was changing the tires <span class='text-purple'>when the customer called</span>." },
+                    level3: { tr: "Tamirci <span class='text-purple'>müşteri aradığında</span> <span class='text-orange'>hasar gören</span> lastikleri değiştiriyordu.", en: "The mechanic was changing the <span class='text-orange'>damaged</span> tires <span class='text-purple'>when the customer called</span>." }
+                },
+                {
+                    vocab: { "polis": "police", "çatılarda": "roofs", "koşarken": "running", "siyah": "black", "maske": "mask", "takan": "wearing", "hırsızı": "thief", "yakalayamadı": "catch" },
+                    level1: { tr: "Polis hırsızı yakalayamadı.", en: "The police couldn't catch the thief." },
+                    level2: { tr: "Polis, <span class='text-purple'>o çatılarda koşarken</span> hırsızı yakalayamadı.", en: "The police couldn't catch the thief <span class='text-purple'>while he was running across the roofs</span>." },
+                    level3: { tr: "Polis, <span class='text-purple'>o çatılarda koşarken</span> <span class='text-orange'>siyah maske takan</span> hırsızı yakalayamadı.", en: "The police couldn't catch the thief <span class='text-orange'>wearing a black mask</span> <span class='text-purple'>while he was running across the roofs</span>." }
+                },
+                {
+                    vocab: { "çocuklar": "children", "müdür": "principal", "gelmeden": "arrived", "sınıfı": "classroom", "temizlemişti": "cleaned", "cezalandırılan": "punished" },
+                    level1: { tr: "Çocuklar sınıfı temizlemişti.", en: "The children had cleaned the classroom." },
+                    level2: { tr: "Çocuklar <span class='text-purple'>müdür gelmeden önce</span> sınıfı temizlemişti.", en: "The children had cleaned the classroom <span class='text-purple'>before the principal arrived</span>." },
+                    level3: { tr: "<span class='text-orange'>Cezalandırılan</span> çocuklar <span class='text-purple'>müdür gelmeden önce</span> sınıfı temizlemişti.", en: "The <span class='text-orange'>punished</span> children had cleaned the classroom <span class='text-purple'>before the principal arrived</span>." }
+                },
+                {
+                    vocab: { "ünlü": "famous", "restoranda": "restaurant", "çalışan": "working", "şef": "chef", "zaman": "time", "kazanmak": "save", "sebzeleri": "vegetables", "sabah": "morning", "erkenden": "early", "hazırlardı": "prepare" },
+                    level1: { tr: "Şef sebzeleri hazırlardı.", en: "The chef used to prepare the vegetables." },
+                    level2: { tr: "Şef <span class='text-purple'>zaman kazanmak için sabah erkenden</span> sebzeleri hazırlardı.", en: "The chef used to prepare the vegetables <span class='text-purple'>early in the morning to save time</span>." },
+                    level3: { tr: "<span class='text-orange'>Ünlü restoranda çalışan</span> şef <span class='text-purple'>zaman kazanmak için sabah erkenden</span> sebzeleri hazırlardı.", en: "The chef <span class='text-orange'>working at the famous restaurant</span> used to prepare the vegetables <span class='text-purple'>early in the morning to save time</span>." }
+                },
+                {
+                    vocab: { "müdür": "manager", "eposta": "email", "gönderdiği": "sent", "yeni": "new", "proje": "project", "üzerinde": "on", "çalışan": "working", "takım": "team", "toplantıya": "meeting", "katılmak": "attend" },
+                    level1: { tr: "Takım toplantıya katılmak zorunda değildi.", en: "The team didn't have to attend the meeting." },
+                    level2: { tr: "Takım, <span class='text-purple'>müdür e-posta gönderdiği için</span> toplantıya katılmak zorunda değildi.", en: "The team didn't have to attend the meeting <span class='text-purple'>because the manager sent an email</span>." },
+                    level3: { tr: "<span class='text-orange'>Yeni proje üzerinde çalışan</span> takım, <span class='text-purple'>müdür e-posta gönderdiği için</span> toplantıya katılmak zorunda değildi.", en: "The team <span class='text-orange'>working on the new project</span> didn't have to attend the meeting <span class='text-purple'>because the manager sent an email</span>." }
+                },
+                {
+                    vocab: { "heyecanlanan": "excited", "köpek": "dog", "yorulana": "tired", "parkta": "park", "topu": "ball", "kovalıyordu": "chasing" },
+                    level1: { tr: "Köpek topu kovalıyordu.", en: "The dog was chasing the ball." },
+                    level2: { tr: "Köpek <span class='text-purple'>yorulana kadar parkta</span> topu kovalıyordu.", en: "The dog was chasing the ball <span class='text-purple'>in the park until it got tired</span>." },
+                    level3: { tr: "<span class='text-orange'>Heyecanlanan</span> köpek <span class='text-purple'>yorulana kadar parkta</span> topu kovalıyordu.", en: "The <span class='text-orange'>excited</span> dog was chasing the ball <span class='text-purple'>in the park until it got tired</span>." }
+                },
+                {
+                    vocab: { "fırtına": "storm", "kötüleştiği": "worse", "bekleyen": "waiting", "yolcular": "passengers", "uçağa": "plane", "binemedi": "board" },
+                    level1: { tr: "Yolcular uçağa binemedi.", en: "The passengers couldn't board the plane." },
+                    level2: { tr: "Yolcular <span class='text-purple'>fırtına kötüleştiği için</span> uçağa binemedi.", en: "The passengers couldn't board the plane <span class='text-purple'>because the storm was getting worse</span>." },
+                    level3: { tr: "<span class='text-orange'>Bekleyen</span> yolcular <span class='text-purple'>fırtına kötüleştiği için</span> uçağa binemedi.", en: "The <span class='text-orange'>waiting</span> passengers couldn't board the plane <span class='text-purple'>because the storm was getting worse</span>." }
+                }
             ]
         };
 
-        // State Management
         let currentDeckData = decks.deck1;
         let currentLeague = 1;
         let activeQueue = []; 
         let wrongQueue = [];  
         let currentIndex = 0; 
         
-        // Stats
         let correctCount = 0;
         let wrongCount = 0;
         let isEnglishVisible = false;
 
-        // DOM Elements
         const uiFlashcard = document.getElementById('flashcard-screen');
         const uiSummary = document.getElementById('summary-screen');
         const elTurkish = document.getElementById('turkish-text');
@@ -465,15 +603,14 @@
         const containerAssessBtns = document.getElementById('assessment-btns');
         const elProgress = document.getElementById('progress-text');
         const elBadge = document.getElementById('level-badge');
-        const btnDeck1 = document.getElementById('btn-deck1');
-        const btnDeck2 = document.getElementById('btn-deck2');
+        const tooltip = document.getElementById('tooltip-dict');
 
         function initApp() {
             switchDeck('deck1');
             setupKeyboardShortcuts();
+            setupTooltip();
         }
 
-        // Shuffle Function to randomize arrays
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -482,26 +619,17 @@
         }
 
         function switchDeck(deckName) {
-            // Update UI buttons
-            if (deckName === 'deck1') {
-                btnDeck1.classList.add('active');
-                btnDeck2.classList.remove('active');
-            } else {
-                btnDeck2.classList.add('active');
-                btnDeck1.classList.remove('active');
-            }
+            document.querySelectorAll('.btn-deck').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${deckName}`).classList.add('active');
 
-            // Set data and restart
             currentDeckData = decks[deckName];
             startLeague(1);
         }
 
         function startLeague(leagueNum) {
             currentLeague = leagueNum;
-            // Populate queue and shuffle for random order
             activeQueue = currentDeckData.map((_, index) => index);
             shuffleArray(activeQueue);
-            
             resetStatsAndRender();
         }
 
@@ -519,12 +647,38 @@
             
             uiSummary.style.display = 'none';
             uiFlashcard.style.display = 'flex';
+            tooltip.style.display = 'none';
             
             renderCard();
         }
 
+        // Contextual Wrapping Function
+        function wrapWords(htmlString) {
+            const temp = document.createElement('div');
+            temp.innerHTML = htmlString;
+            
+            function process(node) {
+                if (node.nodeType === 3) {
+                    const regex = /([a-zA-ZğüşıöçĞÜŞİÖÇ]+)/g;
+                    const wrapped = node.nodeValue.replace(regex, "<span class='dict-word'>$1</span>");
+                    const spanWrapper = document.createElement('span');
+                    spanWrapper.innerHTML = wrapped;
+                    
+                    while (spanWrapper.firstChild) {
+                        node.parentNode.insertBefore(spanWrapper.firstChild, node);
+                    }
+                    node.parentNode.removeChild(node);
+                } else if (node.nodeType === 1 && node.nodeName !== 'SPAN' || (node.nodeName === 'SPAN' && !node.classList.contains('dict-word'))) {
+                    Array.from(node.childNodes).forEach(process);
+                }
+            }
+            Array.from(temp.childNodes).forEach(process);
+            return temp.innerHTML;
+        }
+
         function renderCard() {
             isEnglishVisible = false;
+            tooltip.style.display = 'none';
             
             const sentenceId = activeQueue[currentIndex];
             const data = currentDeckData[sentenceId][`level${currentLeague}`];
@@ -532,7 +686,7 @@
             elBadge.innerText = `League ${currentLeague}`;
             elProgress.innerText = `Card ${currentIndex + 1} of ${activeQueue.length}`;
             
-            elTurkish.innerHTML = data.tr;
+            elTurkish.innerHTML = wrapWords(data.tr);
             elEnglish.innerHTML = data.en;
             
             elEnglish.style.display = 'none';
@@ -547,6 +701,7 @@
             elDivider.style.display = 'block';
             containerShowBtn.style.display = 'none';
             containerAssessBtns.style.display = 'flex';
+            tooltip.style.display = 'none';
         }
 
         function recordAnswer(isCorrect) {
@@ -556,9 +711,7 @@
                 wrongCount++;
                 wrongQueue.push(activeQueue[currentIndex]); 
             }
-            
             currentIndex++;
-            
             if (currentIndex >= activeQueue.length) {
                 renderSummary();
             } else {
@@ -566,36 +719,28 @@
             }
         }
 
-        // --- NEW UNDO FUNCTIONALITY ---
         function undoAction() {
-            // Cannot undo if we are on the first card and haven't answered it yet
             if (currentIndex === 0 && uiSummary.style.display === 'none') return;
-
-            // If we are on the summary screen, we want to step back to the last card
             if (uiSummary.style.display !== 'none') {
                 uiSummary.style.display = 'none';
                 uiFlashcard.style.display = 'flex';
             }
-
-            // Step back one card
             currentIndex--;
             const undoneSentenceId = activeQueue[currentIndex];
 
-            // Revert the stats based on what the user previously entered
             if (wrongQueue.length > 0 && wrongQueue[wrongQueue.length - 1] === undoneSentenceId) {
-                wrongQueue.pop(); // Remove it from the wrong queue
+                wrongQueue.pop(); 
                 wrongCount--;
             } else {
                 correctCount--;
             }
-
-            // Render the previous card fresh
             renderCard();
         }
 
         function renderSummary() {
             uiFlashcard.style.display = 'none';
             uiSummary.style.display = 'block';
+            tooltip.style.display = 'none';
             
             document.getElementById('summary-title').innerText = `League ${currentLeague} Complete!`;
             document.getElementById('stat-correct').innerText = correctCount;
@@ -619,7 +764,7 @@
             if (currentLeague < 3) {
                 const btnAdvance = document.createElement('button');
                 btnAdvance.className = 'btn-advance';
-                btnAdvance.innerText = `Advance to League ${currentLeague + 1}`;
+                btnAdvance.innerText = `Advance to League ${currentLeague + 1} (↓)`;
                 btnAdvance.onclick = () => startLeague(currentLeague + 1);
                 controlsDiv.appendChild(btnAdvance);
             } else if (currentLeague === 3 && wrongCount === 0) {
@@ -631,9 +776,31 @@
             }
         }
 
+        // Dictionary Tooltip Logic
+        function setupTooltip() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('dict-word')) {
+                    const rawWord = e.target.innerText.toLowerCase().replace(/[^a-zğüşıöç]/g, '');
+                    const currentVocab = currentDeckData[activeQueue[currentIndex]].vocab;
+                    
+                    if (currentVocab && currentVocab[rawWord]) {
+                        tooltip.innerText = currentVocab[rawWord];
+                        tooltip.style.display = 'block';
+                        
+                        const rect = e.target.getBoundingClientRect();
+                        tooltip.style.top = (rect.top + window.scrollY - 35) + 'px';
+                        tooltip.style.left = (rect.left + window.scrollX + (rect.width / 2)) + 'px';
+                    } else {
+                        tooltip.style.display = 'none';
+                    }
+                } else {
+                    tooltip.style.display = 'none';
+                }
+            });
+        }
+
         function setupKeyboardShortcuts() {
             document.addEventListener('keydown', function(event) {
-                // Flashcard Screen Keybinds
                 if (uiFlashcard.style.display !== 'none') {
                     if (event.key === 'ArrowUp' && !isEnglishVisible) {
                         event.preventDefault(); 
@@ -646,14 +813,13 @@
                         recordAnswer(false);
                     } else if (event.key === 'ArrowDown') {
                         event.preventDefault();
-                        undoAction(); // The new undo assignment
+                        undoAction(); 
                     }
                 } 
-                // Summary Screen Keybinds
                 else if (uiSummary.style.display !== 'none') {
                     if (event.key === 'ArrowDown') {
                         event.preventDefault();
-                        undoAction(); // Let them undo even from the summary screen!
+                        undoAction(); 
                     }
                 }
             });
@@ -662,7 +828,7 @@
         window.onload = initApp;
 
     </script>
-
+    
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
