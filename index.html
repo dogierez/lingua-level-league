@@ -213,6 +213,7 @@
     </div>
 
     <div class="app-container">
+        <!-- FLASHCARD UI -->
         <div class="flashcard" id="flashcard-screen">
             <div class="level-badge" id="level-badge">League 1</div>
             
@@ -230,6 +231,7 @@
             </div>
         </div>
 
+        <!-- SUMMARY UI -->
         <div class="summary-screen" id="summary-screen">
             <div class="summary-title" id="summary-title">League Complete!</div>
             
@@ -249,7 +251,8 @@
             </div>
 
             <div class="summary-controls" id="summary-controls">
-                </div>
+                <!-- Buttons dynamically injected here -->
+            </div>
         </div>
     </div>
 
@@ -307,13 +310,13 @@
             },
             {
                 level1: { tr: "Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables." },
-                level2: { tr: "<span class='text-purple'>Müşteriler geldiğinde</span> Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers arrived</span>," },
-                level3: { tr: "<span class='text-orange'>Para harcayan</span> <span class='text-purple'>Müşteriler geldiğinde</span> Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers </span><span class='text-orange'>spending money</span><span class='text-purple'> arrived</span>," }
+                level2: { tr: "<span class='text-purple'>Müşteriler vardığında</span> Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers arrived</span>," },
+                level3: { tr: "<span class='text-orange'>Para harcayan</span> <span class='text-purple'>Müşteriler vardığında</span> Manav sebzeleri tartamamıştı.", en: "The green grocer couldn't weigh the vegetables <span class='text-purple'>when the customers </span><span class='text-orange'>spending money</span><span class='text-purple'> arrived</span>," }
             },
             {
-                level1: { tr: "Güvenlik kamerları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras." },
-                level2: { tr: "Güvenlik, <span class='text-purple'>FBI talep edene kadar</span> kamerları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." },
-                level3: { tr: "<span class='text-orange'>Her şeyi kaydeden</span> Güvenlik, <span class='text-purple'>FBI talep edene kadar</span> kamerları izlemek zorunda değildi.", en: "The security <span class='text-orange'>recording everything</span> didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." }
+                level1: { tr: "Güvenlik kameraları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras." },
+                level2: { tr: "Güvenlik, <span class='text-purple'>FBI talep edene kadar</span> kameraları izlemek zorunda değildi.", en: "The security didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." },
+                level3: { tr: "<span class='text-orange'>Her şeyi kaydeden</span> Güvenlik, <span class='text-purple'>FBI talep edene kadar</span> kameraları izlemek zorunda değildi.", en: "The security <span class='text-orange'>recording everything</span> didn't have to watch the cameras <span class='text-purple'>until the FBI requested it</span>." }
             }
         ];
 
@@ -444,8 +447,7 @@
                 controlsDiv.appendChild(btnReview);
             }
 
-            // Only allow advancing if they scored 100%, OR if you want them to be able to advance anyway
-            // We will let them advance if they are not on the last league
+            // Let them advance if they are not on the last league
             if (currentLeague < 3) {
                 const btnAdvance = document.createElement('button');
                 btnAdvance.className = 'btn-advance';
