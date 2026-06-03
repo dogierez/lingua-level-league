@@ -306,6 +306,7 @@
             <button class="btn-deck active" id="btn-deck1" onclick="switchDeck('deck1')">Deck 1</button>
             <button class="btn-deck" id="btn-deck2" onclick="switchDeck('deck2')">Deck 2</button>
             <button class="btn-deck" id="btn-deck3" onclick="switchDeck('deck3')">Deck 3</button>
+            <button class="btn-deck" id="btn-deck4" onclick="switchDeck('deck4')">Deck 4</button>
         </div>
 
         <div class="progress" id="progress-text">Initializing...</div>
@@ -583,6 +584,80 @@
                     level1: { tr: "Yolcular uçağa binemedi.", en: "The passengers couldn't board the plane." },
                     level2: { tr: "Yolcular <span class='text-purple'>fırtına kötüleştiği için</span> uçağa binemedi.", en: "The passengers couldn't board the plane <span class='text-purple'>because the storm was getting worse</span>." },
                     level3: { tr: "<span class='text-orange'>Bekleyen</span> yolcular <span class='text-purple'>fırtına kötüleştiği için</span> uçağa binemedi.", en: "The <span class='text-orange'>waiting</span> passengers couldn't board the plane <span class='text-purple'>because the storm was getting worse</span>." }
+                }
+            ],
+            deck4: [
+                {
+                    vocab: { "muhasebeci": "accountant", "raporları": "reports", "inceliyordu": "reviewing", "hatayı": "error", "bulmak": "find", "yeni": "newly", "işe": "hired", "alınan": "hired" },
+                    level1: { tr: "Muhasebeci raporları inceliyordu.", en: "The accountant was reviewing the reports." },
+                    level2: { tr: "Muhasebeci <span class='text-purple'>hatayı bulmak için</span> raporları inceliyordu.", en: "The accountant was reviewing the reports <span class='text-purple'>in order to find the error</span>." },
+                    level3: { tr: "<span class='text-orange'>Yeni işe alınan</span> muhasebeci <span class='text-purple'>hatayı bulmak için</span> raporları inceliyordu.", en: "The <span class='text-orange'>newly hired</span> accountant was reviewing the reports <span class='text-purple'>in order to find the error</span>." }
+                },
+                {
+                    vocab: { "tesisatçı": "plumber", "boruyu": "pipe", "tamir": "fix", "edemedi": "fix", "ana": "main", "vana": "valve", "bozuk": "broken", "mutfakta": "kitchen", "çalışan": "working" },
+                    level1: { tr: "Tesisatçı boruyu tamir edemedi.", en: "The plumber couldn't fix the pipe." },
+                    level2: { tr: "Tesisatçı <span class='text-purple'>ana vana bozuk olduğundan dolayı</span> boruyu tamir edemedi.", en: "The plumber couldn't fix the pipe <span class='text-purple'>because the main valve was broken</span>." },
+                    level3: { tr: "<span class='text-orange'>Mutfakta çalışan</span> tesisatçı <span class='text-purple'>ana vana bozuk olduğundan dolayı</span> boruyu tamir edemedi.", en: "The plumber <span class='text-orange'>working in the kitchen</span> couldn't fix the pipe <span class='text-purple'>because the main valve was broken</span>." }
+                },
+                {
+                    vocab: { "müdür": "manager", "oteli": "hotel", "ayırtmıştı": "booked", "fiyatlar": "prices", "artmadan": "increased", "londraya": "london", "seyahat": "traveling", "eden": "traveling" },
+                    level1: { tr: "Müdür oteli ayırtmıştı.", en: "The manager had booked the hotel." },
+                    level2: { tr: "Müdür <span class='text-purple'>fiyatlar artmadan önce</span> oteli ayırtmıştı.", en: "The manager had booked the hotel <span class='text-purple'>before the prices increased</span>." },
+                    level3: { tr: "<span class='text-orange'>Londra'ya seyahat eden</span> müdür <span class='text-purple'>fiyatlar artmadan önce</span> oteli ayırtmıştı.", en: "The manager <span class='text-orange'>traveling to London</span> had booked the hotel <span class='text-purple'>before the prices increased</span>." }
+                },
+                {
+                    vocab: { "fırıncı": "baker", "ekmeği": "bread", "pişirirdi": "bake", "müşteriler": "customers", "taze": "fresh", "alabilsin": "buy", "sabah": "morning", "erkenden": "early", "dükkanı": "shop", "işleten": "running" },
+                    level1: { tr: "Fırıncı ekmeği pişirirdi.", en: "The baker used to bake the bread." },
+                    level2: { tr: "Fırıncı <span class='text-purple'>müşteriler taze alabilsin diye</span> ekmeği <span class='text-purple'>sabah erkenden</span> pişirirdi.", en: "The baker used to bake the bread <span class='text-purple'>early in the morning so that the customers could buy it fresh</span>." },
+                    level3: { tr: "<span class='text-orange'>Dükkanı işleten</span> fırıncı <span class='text-purple'>müşteriler taze alabilsin diye</span> ekmeği <span class='text-purple'>sabah erkenden</span> pişirirdi.", en: "The baker <span class='text-orange'>running the shop</span> used to bake the bread <span class='text-purple'>early in the morning so that the customers could buy it fresh</span>." }
+                },
+                {
+                    vocab: { "mimar": "architect", "binayı": "building", "yeniden": "redesign", "tasarlamak": "redesign", "belediye": "municipality", "planları": "plans", "onayladığından": "approved", "şehir": "city", "merkezi": "center", "planlanan": "planned" },
+                    level1: { tr: "Mimar binayı yeniden tasarlamak zorunda değildi.", en: "The architect didn't have to redesign the building." },
+                    level2: { tr: "Mimar, <span class='text-purple'>belediye planları onayladığından dolayı</span> binayı yeniden tasarlamak zorunda değildi.", en: "The architect didn't have to redesign the building <span class='text-purple'>because the municipality approved the plans</span>." },
+                    level3: { tr: "Mimar, <span class='text-purple'>belediye planları onayladığından dolayı</span> <span class='text-orange'>şehir merkezi için planlanan</span> binayı yeniden tasarlamak zorunda değildi.", en: "The architect didn't have to redesign the building <span class='text-orange'>planned for the city center</span> <span class='text-purple'>because the municipality approved the plans</span>." }
+                },
+                {
+                    vocab: { "sürücü": "driver", "radyoyu": "radio", "dinliyordu": "listening", "trafik": "traffic", "sıkışıklığında": "jam", "beklerken": "waiting", "atanan": "assigned" },
+                    level1: { tr: "Sürücü radyoyu dinliyordu.", en: "The driver was listening to the radio." },
+                    level2: { tr: "Sürücü <span class='text-purple'>trafik sıkışıklığında beklerken</span> radyoyu dinliyordu.", en: "The driver was listening to the radio <span class='text-purple'>while he was waiting in the traffic jam</span>." },
+                    level3: { tr: "<span class='text-orange'>Atanan</span> sürücü <span class='text-purple'>trafik sıkışıklığında beklerken</span> radyoyu dinliyordu.", en: "The <span class='text-orange'>assigned</span> driver was listening to the radio <span class='text-purple'>while he was waiting in the traffic jam</span>." }
+                },
+                {
+                    vocab: { "teknisyen": "technician", "dosyaları": "files", "kurtaramadı": "recover", "sabit": "hard", "disk": "drive", "yandığında": "burned", "yanlışlıkla": "mistake", "silinen": "deleted" },
+                    level1: { tr: "Teknisyen dosyaları kurtaramadı.", en: "The technician couldn't recover the files." },
+                    level2: { tr: "Teknisyen, <span class='text-purple'>sabit disk yandığında</span> dosyaları kurtaramadı.", en: "The technician couldn't recover the files <span class='text-purple'>when the hard drive burned</span>." },
+                    level3: { tr: "Teknisyen, <span class='text-purple'>sabit disk yandığında</span> <span class='text-orange'>yanlışlıkla silinen</span> dosyaları kurtaramadı.", en: "The technician couldn't recover the files <span class='text-orange'>deleted by mistake</span> <span class='text-purple'>when the hard drive burned</span>." }
+                },
+                {
+                    vocab: { "cerrah": "surgeon", "ameliyatı": "operation", "tamamlamıştı": "completed", "gece": "night", "mesaisi": "shift", "bitmeden": "ended", "ekibi": "team", "tarafından": "by", "desteklenen": "supported" },
+                    level1: { tr: "Cerrah ameliyatı tamamlamıştı.", en: "The surgeon had completed the operation." },
+                    level2: { tr: "Cerrah <span class='text-purple'>gece mesaisi bitmeden önce</span> ameliyatı tamamlamıştı.", en: "The surgeon had completed the operation <span class='text-purple'>before the night shift ended</span>." },
+                    level3: { tr: "<span class='text-orange'>Ekibi tarafından desteklenen</span> cerrah <span class='text-purple'>gece mesaisi bitmeden önce</span> ameliyatı tamamlamıştı.", en: "The surgeon <span class='text-orange'>supported by his team</span> had completed the operation <span class='text-purple'>before the night shift ended</span>." }
+                },
+                {
+                    vocab: { "dükkan": "shop", "sahibi": "keeper", "kapatırdı": "close", "sokaklar": "streets", "karardığında": "dark", "antika": "antiques", "satan": "selling" },
+                    level1: { tr: "Dükkan sahibi dükkanı kapatırdı.", en: "The shopkeeper used to close the store." },
+                    level2: { tr: "Dükkan sahibi <span class='text-purple'>sokaklar karardığında</span> dükkanı kapatırdı.", en: "The shopkeeper used to close the store <span class='text-purple'>when the streets got dark</span>." },
+                    level3: { tr: "<span class='text-orange'>Antika satan</span> dükkan sahibi <span class='text-purple'>sokaklar karardığında</span> dükkanı kapatırdı.", en: "The shopkeeper <span class='text-orange'>selling antiques</span> used to close the store <span class='text-purple'>when the streets got dark</span>." }
+                },
+                {
+                    vocab: { "ev": "host", "sahibi": "host", "akşam": "dinner", "yemeğini": "dinner", "pişirmek": "cook", "misafirler": "guests", "pizza": "pizza", "sipariş": "ordered", "ettiğinden": "ordered", "masayı": "table", "kuran": "setting" },
+                    level1: { tr: "Ev sahibi akşam yemeğini pişirmek zorunda değildi.", en: "The host didn't have to cook the dinner." },
+                    level2: { tr: "Ev sahibi <span class='text-purple'>misafirler pizza sipariş ettiğinden dolayı</span> akşam yemeğini pişirmek zorunda değildi.", en: "The host didn't have to cook the dinner <span class='text-purple'>because the guests ordered pizza</span>." },
+                    level3: { tr: "<span class='text-orange'>Masayı kuran</span> ev sahibi <span class='text-purple'>misafirler pizza sipariş ettiğinden dolayı</span> akşam yemeğini pişirmek zorunda değildi.", en: "The host <span class='text-orange'>setting the table</span> didn't have to cook the dinner <span class='text-purple'>because the guests ordered pizza</span>." }
+                },
+                {
+                    vocab: { "çift": "couple", "duvarları": "walls", "boyuyordu": "painting", "boya": "paint", "bitene": "ran out", "yeni": "new", "evlerine": "house", "taşınan": "moving" },
+                    level1: { tr: "Çift duvarları boyuyordu.", en: "The couple was painting the walls." },
+                    level2: { tr: "Çift <span class='text-purple'>boya bitene kadar</span> duvarları boyuyordu.", en: "The couple was painting the walls <span class='text-purple'>until the paint ran out</span>." },
+                    level3: { tr: "<span class='text-orange'>Yeni evlerine taşınan</span> çift <span class='text-purple'>boya bitene kadar</span> duvarları boyuyordu.", en: "The couple <span class='text-orange'>moving into their new house</span> was painting the walls <span class='text-purple'>until the paint ran out</span>." }
+                },
+                {
+                    vocab: { "takım": "team", "ürünü": "product", "piyasaya": "launch", "süremedi": "launch", "pazarlama": "marketing", "bütçesi": "budget", "düşük": "low", "geçen": "last", "yıl": "year", "geliştirilen": "developed" },
+                    level1: { tr: "Takım ürünü piyasaya süremedi.", en: "The team couldn't launch the product." },
+                    level2: { tr: "Takım <span class='text-purple'>pazarlama bütçesi düşük olduğundan dolayı</span> ürünü piyasaya süremedi.", en: "The team couldn't launch the product <span class='text-purple'>because the marketing budget was low</span>." },
+                    level3: { tr: "Takım <span class='text-purple'>pazarlama bütçesi düşük olduğundan dolayı</span> <span class='text-orange'>geçen yıl geliştirilen</span> ürünü piyasaya süremedi.", en: "The team couldn't launch the product <span class='text-orange'>developed last year</span> <span class='text-purple'>because the marketing budget was low</span>." }
                 }
             ]
         };
