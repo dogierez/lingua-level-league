@@ -27,6 +27,8 @@
             --btn-advance-hover: #e67e22;
             --deck-active: #2c3e50;
             --deck-inactive: #bdc3c7;
+            --green-bg: #d4edda;
+            --blue-marker: #1565c0;
         }
 
         body {
@@ -60,7 +62,7 @@
             display: flex;
             gap: 0.8rem;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             flex-wrap: wrap;
         }
 
@@ -84,6 +86,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: #7f8c8d;
+            margin-top: 0.5rem;
         }
 
         .keyboard-hints {
@@ -140,14 +143,21 @@
             min-height: 60px;
         }
 
-        .text-purple {
-            color: var(--purple-highlight);
-            font-weight: 700;
-        }
+        /* Standard Modifiers */
+        .text-purple { color: var(--purple-highlight); font-weight: 700; }
+        .text-orange { color: var(--orange-highlight); font-weight: 700; }
 
-        .text-orange {
-            color: var(--orange-highlight);
-            font-weight: 700;
+        /* Noun Clause Modifiers (Extra Decks) */
+        .bg-green {
+            background-color: var(--green-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #2c3e50;
+        }
+        
+        .text-blue {
+            color: var(--blue-marker);
+            font-weight: 800;
         }
 
         /* Dictionary Word Styling */
@@ -302,11 +312,20 @@
     <div class="header">
         <h1>Grammar League</h1>
         
+        <!-- REGULAR DECKS -->
         <div class="deck-selector">
             <button class="btn-deck active" id="btn-deck1" onclick="switchDeck('deck1')">Deck 1</button>
             <button class="btn-deck" id="btn-deck2" onclick="switchDeck('deck2')">Deck 2</button>
             <button class="btn-deck" id="btn-deck3" onclick="switchDeck('deck3')">Deck 3</button>
             <button class="btn-deck" id="btn-deck4" onclick="switchDeck('deck4')">Deck 4</button>
+        </div>
+
+        <!-- EXTRA DECKS (Noun Clauses) -->
+        <div class="deck-selector">
+            <button class="btn-deck" id="btn-extraDeck1" onclick="switchDeck('extraDeck1')">Extra Deck 1</button>
+            <button class="btn-deck" id="btn-extraDeck2" onclick="switchDeck('extraDeck2')">Extra Deck 2</button>
+            <button class="btn-deck" id="btn-extraDeck3" onclick="switchDeck('extraDeck3')">Extra Deck 3</button>
+            <button class="btn-deck" id="btn-extraDeck4" onclick="switchDeck('extraDeck4')">Extra Deck 4</button>
         </div>
 
         <div class="progress" id="progress-text">Initializing...</div>
@@ -466,7 +485,7 @@
                 {
                     vocab: { "patron": "boss", "sözleşmeyi": "contract", "imzalamak": "sign", "hızlı": "quick", "şekilde": "way", "hazırlanan": "prepared" },
                     level1: { tr: "Patron sözleşmeyi imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract." },
-                    level2: { tr: "Patron sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract <span class='text-purple'>in a quick way</span>." },
+                    level2: { tr: "Patron sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didnt have to sign the contract <span class='text-purple'>in a quick way</span>." },
                     level3: { tr: "Patron <span class='text-orange'>hazırlanan</span> sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didn't have to sign the <span class='text-orange'>prepared</span> contract <span class='text-purple'>in a quick way</span>." }
                 },
                 {
@@ -659,6 +678,77 @@
                     level2: { tr: "Takım <span class='text-purple'>pazarlama bütçesi düşük olduğundan dolayı</span> ürünü piyasaya süremedi.", en: "The team couldn't launch the product <span class='text-purple'>because the marketing budget was low</span>." },
                     level3: { tr: "Takım <span class='text-purple'>pazarlama bütçesi düşük olduğundan dolayı</span> <span class='text-orange'>geçen yıl geliştirilen</span> ürünü piyasaya süremedi.", en: "The team couldn't launch the product <span class='text-orange'>developed last year</span> <span class='text-purple'>because the marketing budget was low</span>." }
                 }
+            ],
+            extraDeck1: [
+                {
+                    vocab: { "tahmin": "guess", "edemedik": "couldn't", "arabasını": "car", "sattığını": "sold" },
+                    level1: { tr: "Tahmin edemedik.", en: "We couldn't guess." },
+                    level2: { tr: "<span class='bg-green'>Arabasını sattığını</span> tahmin edemedik.", en: "We couldn't guess <span class='bg-green'><span class='text-blue'>that</span> he sold his car</span>." }
+                },
+                {
+                    vocab: { "bilet": "ticket", "satın": "buy", "alıp": "bought", "almadığını": "whether", "öğrenmek": "learn", "zorundaydık": "had to" },
+                    level1: { tr: "Öğrenmek zorundaydık.", en: "We had to learn." },
+                    level2: { tr: "<span class='bg-green'>Bilet satın alıp almadığını</span> öğrenmek zorundaydık.", en: "We had to learn <span class='bg-green'><span class='text-blue'>if</span> he bought a ticket</span>." }
+                },
+                {
+                    vocab: { "arabanın": "car", "ağaca": "tree", "nasıl": "how", "çarptığını": "crashed", "televizyonlar": "televisions", "gösteriyor": "showing" },
+                    level1: { tr: "Televizyonlar gösteriyor.", en: "The televisions are showing." },
+                    level2: { tr: "Televizyonlar <span class='bg-green'>arabanın ağaca nasıl çarptığını</span> gösteriyor.", en: "The televisions are showing <span class='bg-green'><span class='text-blue'>how</span> the car crashed the tree</span>." }
+                },
+                {
+                    vocab: { "kocasının": "husband", "akşam": "dinner", "yemeğini": "dinner", "hazırlayıp": "prepared", "merak": "wondering", "ediyordu": "wondering" },
+                    level1: { tr: "Merak ediyordu.", en: "She was wondering." },
+                    level2: { tr: "Kocasının <span class='bg-green'>akşam yemeğini hazırlayıp hazırlamadığını</span> merak ediyordu.", en: "She was wondering <span class='bg-green'><span class='text-blue'>if</span> her husband prepared the dinner</span>." }
+                },
+                {
+                    vocab: { "toplantıyı": "meeting", "niye": "why", "iptal": "cancel", "zorunda": "had to", "açıklamışlardı": "explained" },
+                    level1: { tr: "Açıklamışlardı.", en: "They had explained." },
+                    level2: { tr: "<span class='bg-green'>Toplantıyı niye iptal etmek zorunda kaldıklarını</span> açıklamışlardı.", en: "They had explained <span class='bg-green'><span class='text-blue'>why</span> they had to cancel the meeting</span>." }
+                },
+                {
+                    vocab: { "parasını": "money", "kumarda": "gamble", "kaybettiğini": "lost", "itiraf": "confess" },
+                    level1: { tr: "İtiraf etmek zorunda kaldı.", en: "He had to confess." },
+                    level2: { tr: "<span class='bg-green'>Parasını kumarda kaybettiğini</span> itiraf etmek zorunda kaldı.", en: "He had to confess <span class='bg-green'><span class='text-blue'>that</span> he lost his money in Gamble</span>." }
+                },
+                {
+                    vocab: { "evi": "house", "ne": "when", "zaman": "when", "sattığınızı": "sold", "duyurmalısınız": "announce" },
+                    level1: { tr: "Duyurmalısınız.", en: "You should announce." },
+                    level2: { tr: "<span class='bg-green'>Evi ne zaman sattığınızı</span> duyurmalısınız.", en: "You should announce <span class='bg-green'><span class='text-blue'>when</span> you sold the house</span>." }
+                },
+                {
+                    vocab: { "nakitimiz": "cash", "olduğunu": "had", "beyan": "declare" },
+                    level1: { tr: "Beyan edemedik.", en: "We couldn't declare." },
+                    level2: { tr: "<span class='bg-green'>Nakitimiz olduğunu</span> beyan edemedik.", en: "We couldn't declare <span class='bg-green'><span class='text-blue'>that</span> we had cash</span>." }
+                },
+                {
+                    vocab: { "partiye": "party", "gelip": "come", "gelmeyeceğini": "whether", "öğrenemedim": "learn" },
+                    level1: { tr: "Öğrenemedim.", en: "I couldn't learn." },
+                    level2: { tr: "<span class='bg-green'>Partiye gelip gelmeyeceğini</span> öğrenemedim.", en: "I couldn't learn <span class='bg-green'><span class='text-blue'>if</span> she will come to the party</span>." }
+                }
+            ],
+            extraDeck2: [
+                // Empty placeholder ready for your next sentences
+                {
+                    vocab: { },
+                    level1: { tr: "Coming soon...", en: "Coming soon..." },
+                    level2: { tr: "Coming soon...", en: "Coming soon..." }
+                }
+            ],
+            extraDeck3: [
+                // Empty placeholder ready for your next sentences
+                {
+                    vocab: { },
+                    level1: { tr: "Coming soon...", en: "Coming soon..." },
+                    level2: { tr: "Coming soon...", en: "Coming soon..." }
+                }
+            ],
+            extraDeck4: [
+                // Empty placeholder ready for your next sentences
+                {
+                    vocab: { },
+                    level1: { tr: "Coming soon...", en: "Coming soon..." },
+                    level2: { tr: "Coming soon...", en: "Coming soon..." }
+                }
             ]
         };
 
@@ -667,6 +757,7 @@
         let activeQueue = []; 
         let wrongQueue = [];  
         let currentIndex = 0; 
+        let maxLeague = 3; // Dynamically updated based on regular vs extra deck
         
         let correctCount = 0;
         let wrongCount = 0;
@@ -699,6 +790,12 @@
         function switchDeck(deckName) {
             document.querySelectorAll('.btn-deck').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${deckName}`).classList.add('active');
+
+            if (deckName.startsWith('extra')) {
+                maxLeague = 2; // Extra decks only have 2 leagues
+            } else {
+                maxLeague = 3; // Regular decks have 3 leagues
+            }
 
             currentDeckData = decks[deckName];
             startLeague(1);
@@ -825,7 +922,10 @@
             document.getElementById('stat-wrong').innerText = wrongCount;
             
             const total = correctCount + wrongCount;
-            const percent = Math.round((correctCount / total) * 100);
+            let percent = 0;
+            if(total > 0) {
+                 percent = Math.round((correctCount / total) * 100);
+            }
             document.getElementById('stat-percent').innerText = `${percent}%`;
 
             const controlsDiv = document.getElementById('summary-controls');
@@ -839,13 +939,13 @@
                 controlsDiv.appendChild(btnReview);
             }
 
-            if (currentLeague < 3) {
+            if (currentLeague < maxLeague) {
                 const btnAdvance = document.createElement('button');
                 btnAdvance.className = 'btn-advance';
                 btnAdvance.innerText = `Advance to League ${currentLeague + 1} (↓)`;
                 btnAdvance.onclick = () => startLeague(currentLeague + 1);
                 controlsDiv.appendChild(btnAdvance);
-            } else if (currentLeague === 3 && wrongCount === 0) {
+            } else if (currentLeague === maxLeague && wrongCount === 0) {
                 const btnFinish = document.createElement('button');
                 btnFinish.className = 'btn-advance';
                 btnFinish.innerText = `🏆 Mastered Everything! Restart League 1`;
