@@ -1,4 +1,4 @@
-const CACHE_NAME = 'grammar-league-v5';
+const CACHE_NAME = 'grammar-league-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
