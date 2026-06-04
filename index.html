@@ -322,10 +322,10 @@
 
         <!-- EXTRA DECKS (Noun Clauses) -->
         <div class="deck-selector">
-            <button class="btn-deck" id="btn-extraDeck1" onclick="switchDeck('extraDeck1')">Extra Deck 1</button>
-            <button class="btn-deck" id="btn-extraDeck2" onclick="switchDeck('extraDeck2')">Extra Deck 2</button>
-            <button class="btn-deck" id="btn-extraDeck3" onclick="switchDeck('extraDeck3')">Extra Deck 3</button>
-            <button class="btn-deck" id="btn-extraDeck4" onclick="switchDeck('extraDeck4')">Extra Deck 4</button>
+            <button class="btn-deck" id="btn-extraDeck1" onclick="switchDeck('extraDeck1')">Extra 1</button>
+            <button class="btn-deck" id="btn-extraDeck2" onclick="switchDeck('extraDeck2')">Extra 2</button>
+            <button class="btn-deck" id="btn-extraDeck3" onclick="switchDeck('extraDeck3')">Extra 3</button>
+            <button class="btn-deck" id="btn-extraDeck4" onclick="switchDeck('extraDeck4')">Extra 4</button>
         </div>
 
         <div class="progress" id="progress-text">Initializing...</div>
@@ -388,7 +388,7 @@
                     vocab: { "müdür": "manager", "projeyi": "project", "inceliyordu": "examining", "genel": "general", "merkeze": "headquarters", "yollamak": "send", "atanan": "assigned" },
                     level1: { tr: "Müdür projeyi inceliyordu.", en: "The manager was examining the project." },
                     level2: { tr: "Müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." },
-                    level3: { tr: "<span class='text-orange'>Atanan</span> Müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The <span class='text-orange'>assigned</span> manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." }
+                    level3: { tr: "<span class='text-orange'>Atanan</span> müdür projeyi <span class='text-purple'>genel merkeze yollamak için</span> inceliyordu.", en: "The <span class='text-orange'>assigned</span> manager was examining the project <span class='text-purple'>in order to send it to the headquarters</span>." }
                 },
                 {
                     vocab: { "taksici": "taxi driver", "müşteriyi": "customer", "beklemedi": "wait", "sarhoş": "drunk", "bağıran": "shouting" },
@@ -399,14 +399,14 @@
                 {
                     vocab: { "bankacı": "banker", "hesapları": "accounts", "kontrol": "check", "etmişti": "checked", "yapay": "artificial", "zeka": "intelligence", "kullanarak": "using", "çağrılan": "called" },
                     level1: { tr: "Bankacı hesapları kontrol etmişti.", en: "The banker had checked the accounts." },
-                    level2: { tr: "Bankacı hesapları <span class='text-purple'>Yapay Zeka kullanarak</span> kontrol etmişti.", en: "The banker had checked the accounts <span class='text-purple'>by using Artificial Intelligence</span>." },
-                    level3: { tr: "<span class='text-orange'>Çağrılan</span> Bankacı hesapları <span class='text-purple'>Yapay Zeka kullanarak</span> kontrol etmişti.", en: "The <span class='text-orange'>called</span> banker had checked the accounts <span class='text-purple'>by using Artificial Intelligence</span>." }
+                    level2: { tr: "Bankacı hesapları <span class='text-purple'>yapay zeka kullanarak</span> kontrol etmişti.", en: "The banker had checked the accounts <span class='text-purple'>by using artificial intelligence</span>." },
+                    level3: { tr: "<span class='text-orange'>Çağrılan</span> bankacı hesapları <span class='text-purple'>yapay zeka kullanarak</span> kontrol etmişti.", en: "The <span class='text-orange'>called</span> banker had checked the accounts <span class='text-purple'>by using artificial intelligence</span>." }
                 },
                 {
                     vocab: { "kasap": "butcher", "etleri": "meat", "doğrardı": "chop", "kadınlar": "women", "mangal": "barbecue", "bekleyen": "waiting" },
                     level1: { tr: "Kasap etleri doğrardı.", en: "The butcher used to chop the meat." },
-                    level2: { tr: "Kasap <span class='text-purple'>kadınlar mangal yapabilsin diye</span> etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the women could barbecue</span>." },
-                    level3: { tr: "Kasap <span class='text-orange'>bekleyen</span> <span class='text-purple'>kadınlar mangal yapabilsin diye</span> etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the </span><span class='text-orange'>waiting</span><span class='text-purple'> women could barbecue</span>." }
+                    level2: { tr: "<span class='text-purple'>Kadınlar mangal yapabilsin diye</span> kasap etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the women could barbecue</span>." },
+                    level3: { tr: "<span class='text-orange'>Bekleyen</span> <span class='text-purple'>kadınlar mangal yapabilsin diye</span> kasap etleri doğrardı.", en: "The butcher used to chop the meat <span class='text-purple'>so that the </span><span class='text-orange'>waiting</span><span class='text-purple'> women could barbecue</span>." }
                 },
                 {
                     vocab: { "pilot": "pilot", "kokpiti": "cockpit", "düzenliyor": "organizing", "düzgün": "proper", "şekilde": "way", "tamir": "repaired", "edilen": "repaired" },
@@ -415,10 +415,10 @@
                     level3: { tr: "Pilot <span class='text-orange'>tamir edilen</span> kokpiti <span class='text-purple'>düzgün bir şekilde</span> düzenliyor.", en: "The pilot is organizing the <span class='text-orange'>repaired</span> cockpit <span class='text-purple'>in a proper way</span>." }
                 },
                 {
-                    vocab: { "kutuları": "boxes", "açtı": "opened", "müşteriler": "customers", "gelene": "arrived", "teslim": "delivered", "edilen": "delivered" },
+                    vocab: { "kutuları": "boxes", "açtı": "opened", "müşteriler": "customers", "varana": "arrived", "teslim": "delivered", "edilen": "delivered" },
                     level1: { tr: "Birisi kutuları açtı.", en: "Somebody opened the boxes." },
-                    level2: { tr: "Birisi kutuları <span class='text-purple'>müşteriler gelene kadar</span> açtı.", en: "Somebody opened the boxes <span class='text-purple'>until the customers arrived</span>." },
-                    level3: { tr: "Birisi <span class='text-orange'>teslim edilen</span> kutuları <span class='text-purple'>müşteriler gelene kadar</span> açtı.", en: "Somebody opened the <span class='text-orange'>delivered</span> boxes <span class='text-purple'>until the customers arrived</span>." }
+                    level2: { tr: "Birisi kutuları <span class='text-purple'>müşteriler varana kadar</span> açtı.", en: "Somebody opened the boxes <span class='text-purple'>until the customers arrived</span>." },
+                    level3: { tr: "Birisi <span class='text-orange'>teslim edilen</span> kutuları <span class='text-purple'>müşteriler varana kadar</span> açtı.", en: "Somebody opened the <span class='text-orange'>delivered</span> boxes <span class='text-purple'>until the customers arrived</span>." }
                 },
                 {
                     vocab: { "sürücü": "driver", "müşteriler": "customers", "alışveriş": "shopping", "yaparken": "shopping", "forklifti": "forklift", "park": "park", "edemedi": "park", "acele": "hurrying", "eden": "hurrying" },
@@ -485,7 +485,7 @@
                 {
                     vocab: { "patron": "boss", "sözleşmeyi": "contract", "imzalamak": "sign", "hızlı": "quick", "şekilde": "way", "hazırlanan": "prepared" },
                     level1: { tr: "Patron sözleşmeyi imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract." },
-                    level2: { tr: "Patron sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didnt have to sign the contract <span class='text-purple'>in a quick way</span>." },
+                    level2: { tr: "Patron sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didn't have to sign the contract <span class='text-purple'>in a quick way</span>." },
                     level3: { tr: "Patron <span class='text-orange'>hazırlanan</span> sözleşmeyi <span class='text-purple'>hızlı bir şekilde</span> imzalamak zorunda değildi.", en: "The boss didn't have to sign the <span class='text-orange'>prepared</span> contract <span class='text-purple'>in a quick way</span>." }
                 },
                 {
@@ -679,6 +679,8 @@
                     level3: { tr: "Takım <span class='text-purple'>pazarlama bütçesi düşük olduğundan dolayı</span> <span class='text-orange'>geçen yıl geliştirilen</span> ürünü piyasaya süremedi.", en: "The team couldn't launch the product <span class='text-orange'>developed last year</span> <span class='text-purple'>because the marketing budget was low</span>." }
                 }
             ],
+            
+            // --- EXTRA DECKS (Noun Clauses) ---
             extraDeck1: [
                 {
                     vocab: { "tahmin": "guess", "edemedik": "couldn't", "arabasını": "car", "sattığını": "sold" },
@@ -688,32 +690,32 @@
                 {
                     vocab: { "bilet": "ticket", "satın": "buy", "alıp": "bought", "almadığını": "whether", "öğrenmek": "learn", "zorundaydık": "had to" },
                     level1: { tr: "Öğrenmek zorundaydık.", en: "We had to learn." },
-                    level2: { tr: "<span class='bg-green'>Bilet satın alıp almadığını</span> öğrenmek zorundaydık.", en: "We had to learn <span class='bg-green'><span class='text-blue'>if</span> he bought a ticket</span>." }
+                    level2: { tr: "<span class='bg-green'>Bilet satın <span class='text-blue'>alıp almadığını</span></span> öğrenmek zorundaydık.", en: "We had to learn <span class='bg-green'><span class='text-blue'>if</span> he bought a ticket</span>." }
                 },
                 {
                     vocab: { "arabanın": "car", "ağaca": "tree", "nasıl": "how", "çarptığını": "crashed", "televizyonlar": "televisions", "gösteriyor": "showing" },
                     level1: { tr: "Televizyonlar gösteriyor.", en: "The televisions are showing." },
-                    level2: { tr: "Televizyonlar <span class='bg-green'>arabanın ağaca nasıl çarptığını</span> gösteriyor.", en: "The televisions are showing <span class='bg-green'><span class='text-blue'>how</span> the car crashed the tree</span>." }
+                    level2: { tr: "Televizyonlar <span class='bg-green'>arabanın ağaca <span class='text-blue'>nasıl</span> çarptığını</span> gösteriyor.", en: "The televisions are showing <span class='bg-green'><span class='text-blue'>how</span> the car crashed the tree</span>." }
                 },
                 {
-                    vocab: { "kocasının": "husband", "akşam": "dinner", "yemeğini": "dinner", "hazırlayıp": "prepared", "merak": "wondering", "ediyordu": "wondering" },
+                    vocab: { "kocasının": "husband", "akşam": "dinner", "yemeğini": "dinner", "hazırlayıp": "prepared", "hazırlamadığını": "whether", "merak": "wondering", "ediyordu": "wondering" },
                     level1: { tr: "Merak ediyordu.", en: "She was wondering." },
-                    level2: { tr: "Kocasının <span class='bg-green'>akşam yemeğini hazırlayıp hazırlamadığını</span> merak ediyordu.", en: "She was wondering <span class='bg-green'><span class='text-blue'>if</span> her husband prepared the dinner</span>." }
+                    level2: { tr: "Kocasının <span class='bg-green'>akşam yemeğini <span class='text-blue'>hazırlayıp hazırlamadığını</span></span> merak ediyordu.", en: "She was wondering <span class='bg-green'><span class='text-blue'>if</span> her husband prepared the dinner</span>." }
                 },
                 {
-                    vocab: { "toplantıyı": "meeting", "niye": "why", "iptal": "cancel", "zorunda": "had to", "açıklamışlardı": "explained" },
+                    vocab: { "toplantıyı": "meeting", "niye": "why", "iptal": "cancel", "etmek": "to", "zorunda": "had to", "kaldıklarını": "had to", "açıklamışlardı": "explained" },
                     level1: { tr: "Açıklamışlardı.", en: "They had explained." },
-                    level2: { tr: "<span class='bg-green'>Toplantıyı niye iptal etmek zorunda kaldıklarını</span> açıklamışlardı.", en: "They had explained <span class='bg-green'><span class='text-blue'>why</span> they had to cancel the meeting</span>." }
+                    level2: { tr: "<span class='bg-green'>Toplantıyı <span class='text-blue'>niye</span> iptal etmek zorunda kaldıklarını</span> açıklamışlardı.", en: "They had explained <span class='bg-green'><span class='text-blue'>why</span> they had to cancel the meeting</span>." }
                 },
                 {
-                    vocab: { "parasını": "money", "kumarda": "gamble", "kaybettiğini": "lost", "itiraf": "confess" },
+                    vocab: { "parasını": "money", "kumarda": "gamble", "kaybettiğini": "lost", "itiraf": "confess", "kaldı": "had to" },
                     level1: { tr: "İtiraf etmek zorunda kaldı.", en: "He had to confess." },
-                    level2: { tr: "<span class='bg-green'>Parasını kumarda kaybettiğini</span> itiraf etmek zorunda kaldı.", en: "He had to confess <span class='bg-green'><span class='text-blue'>that</span> he lost his money in Gamble</span>." }
+                    level2: { tr: "<span class='bg-green'>Parasını kumarda kaybettiğini</span> itiraf etmek zorunda kaldı.", en: "He had to confess <span class='bg-green'><span class='text-blue'>that</span> he lost his money in gamble</span>." }
                 },
                 {
                     vocab: { "evi": "house", "ne": "when", "zaman": "when", "sattığınızı": "sold", "duyurmalısınız": "announce" },
                     level1: { tr: "Duyurmalısınız.", en: "You should announce." },
-                    level2: { tr: "<span class='bg-green'>Evi ne zaman sattığınızı</span> duyurmalısınız.", en: "You should announce <span class='bg-green'><span class='text-blue'>when</span> you sold the house</span>." }
+                    level2: { tr: "<span class='bg-green'>Evi <span class='text-blue'>ne zaman</span> sattığınızı</span> duyurmalısınız.", en: "You should announce <span class='bg-green'><span class='text-blue'>when</span> you sold the house</span>." }
                 },
                 {
                     vocab: { "nakitimiz": "cash", "olduğunu": "had", "beyan": "declare" },
@@ -723,31 +725,148 @@
                 {
                     vocab: { "partiye": "party", "gelip": "come", "gelmeyeceğini": "whether", "öğrenemedim": "learn" },
                     level1: { tr: "Öğrenemedim.", en: "I couldn't learn." },
-                    level2: { tr: "<span class='bg-green'>Partiye gelip gelmeyeceğini</span> öğrenemedim.", en: "I couldn't learn <span class='bg-green'><span class='text-blue'>if</span> she will come to the party</span>." }
+                    level2: { tr: "<span class='bg-green'>Partiye <span class='text-blue'>gelip gelmeyeceğini</span></span> öğrenemedim.", en: "I couldn't learn <span class='bg-green'><span class='text-blue'>if</span> she will come to the party</span>." }
                 }
             ],
             extraDeck2: [
-                // Empty placeholder ready for your next sentences
                 {
-                    vocab: { },
-                    level1: { tr: "Coming soon...", en: "Coming soon..." },
-                    level2: { tr: "Coming soon...", en: "Coming soon..." }
+                    vocab: { "anlayamadım": "couldn't", "neyi": "what", "kastettiğini": "meant" },
+                    level1: { tr: "Anlayamadım.", en: "I couldn't understand." },
+                    level2: { tr: "<span class='bg-green'><span class='text-blue'>Neyi</span> kastettiğini</span> anlayamadım.", en: "I couldn't understand <span class='bg-green'><span class='text-blue'>what</span> he meant</span>." }
+                },
+                {
+                    vocab: { "herkes": "everyone", "biliyor": "knows", "şirketin": "company", "para": "money", "kaybettiğini": "losing" },
+                    level1: { tr: "Herkes biliyor.", en: "Everyone knows." },
+                    level2: { tr: "<span class='bg-green'>Şirketin para kaybettiğini</span> herkes biliyor.", en: "Everyone knows <span class='bg-green'><span class='text-blue'>that</span> the company is losing money</span>." }
+                },
+                {
+                    vocab: { "söylemedi": "say", "toplantıya": "meeting", "katılıp": "attend", "katılmayacağını": "whether" },
+                    level1: { tr: "Söylemedi.", en: "He didn't say." },
+                    level2: { tr: "<span class='bg-green'>Toplantıya <span class='text-blue'>katılıp katılmayacağını</span></span> söylemedi.", en: "He didn't say <span class='bg-green'><span class='text-blue'>if</span> he would attend the meeting</span>." }
+                },
+                {
+                    vocab: { "uçuşu": "flight", "neden": "why", "ertelediklerini": "delayed", "açıklayamadılar": "explain" },
+                    level1: { tr: "Açıklayamadılar.", en: "They couldn't explain." },
+                    level2: { tr: "<span class='bg-green'>Uçuşu <span class='text-blue'>neden</span> ertelediklerini</span> açıklayamadılar.", en: "They couldn't explain <span class='bg-green'><span class='text-blue'>why</span> they delayed the flight</span>." }
+                },
+                {
+                    vocab: { "hatırlamıyoruz": "remember", "bu": "this", "paketi": "package", "kimin": "who", "gönderdiğini": "sent" },
+                    level1: { tr: "Hatırlamıyoruz.", en: "We don't remember." },
+                    level2: { tr: "<span class='bg-green'>Bu paketi <span class='text-blue'>kimin</span> gönderdiğini</span> hatırlamıyoruz.", en: "We don't remember <span class='bg-green'><span class='text-blue'>who</span> sent this package</span>." }
+                },
+                {
+                    vocab: { "müşteri": "customer", "sordu": "asked", "tamirin": "repair", "kadar": "much", "tutacağını": "cost" },
+                    level1: { tr: "Müşteri sordu.", en: "The customer asked." },
+                    level2: { tr: "Müşteri <span class='bg-green'>tamirin <span class='text-blue'>ne kadar</span> tutacağını</span> sordu.", en: "The customer asked <span class='bg-green'><span class='text-blue'>how much</span> the repair would cost</span>." }
+                },
+                {
+                    vocab: { "doktor": "doctor", "doğruladı": "confirmed", "hastanın": "patient", "iyileştiğini": "recovering" },
+                    level1: { tr: "Doktor doğruladı.", en: "The doctor confirmed." },
+                    level2: { tr: "Doktor <span class='bg-green'>hastanın iyileştiğini</span> doğruladı.", en: "The doctor confirmed <span class='bg-green'><span class='text-blue'>that</span> the patient was recovering</span>." }
+                },
+                {
+                    vocab: { "unuttum": "forgot", "faturayı": "bill", "ödemem": "pay", "gerektiğini": "should" },
+                    level1: { tr: "Unuttum.", en: "I forgot." },
+                    level2: { tr: "<span class='bg-green'>Faturayı <span class='text-blue'>ne zaman</span> ödemem gerektiğini</span> unuttum.", en: "I forgot <span class='bg-green'><span class='text-blue'>when</span> I should pay the bill</span>." }
+                },
+                {
+                    vocab: { "fark": "notice", "etmedik": "didn't", "kapının": "door", "açık": "open", "bırakıldığını": "left" },
+                    level1: { tr: "Fark etmedik.", en: "We didn't notice." },
+                    level2: { tr: "<span class='bg-green'>Kapının açık bırakıldığını</span> fark etmedik.", en: "We didn't notice <span class='bg-green'><span class='text-blue'>that</span> the door was left open</span>." }
                 }
             ],
             extraDeck3: [
-                // Empty placeholder ready for your next sentences
                 {
-                    vocab: { },
-                    level1: { tr: "Coming soon...", en: "Coming soon..." },
-                    level2: { tr: "Coming soon...", en: "Coming soon..." }
+                    vocab: { "karar": "decide", "vermeliyiz": "should", "arabayı": "car", "nereye": "where", "park": "park", "edeceğimize": "will" },
+                    level1: { tr: "Karar vermeliyiz.", en: "We should decide." },
+                    level2: { tr: "<span class='bg-green'>Arabayı <span class='text-blue'>nereye</span> park edeceğimize</span> karar vermeliyiz.", en: "We should decide <span class='bg-green'><span class='text-blue'>where</span> we will park the car</span>." }
+                },
+                {
+                    vocab: { "tamirci": "mechanic", "gösterdi": "showed", "yağı": "oil", "nasıl": "how", "değiştirmem": "change", "gerektiğini": "should" },
+                    level1: { tr: "Tamirci gösterdi.", en: "The mechanic showed." },
+                    level2: { tr: "Tamirci <span class='bg-green'>yağı <span class='text-blue'>nasıl</span> değiştirmem gerektiğini</span> gösterdi.", en: "The mechanic showed <span class='bg-green'><span class='text-blue'>how</span> I should change the oil</span>." }
+                },
+                {
+                    vocab: { "emin": "sure", "değilim": "not", "akünün": "battery", "dolu": "charged", "olup": "whether", "olmadığından": "whether" },
+                    level1: { tr: "Emin değilim.", en: "I am not sure." },
+                    level2: { tr: "<span class='bg-green'>Akünün dolu <span class='text-blue'>olup olmadığından</span></span> emin değilim.", en: "I am not sure <span class='bg-green'><span class='text-blue'>if</span> the battery is charged</span>." }
+                },
+                {
+                    vocab: { "tartışıyorlardı": "discussing", "maçı": "match", "hangi": "which", "takımın": "team", "kazanacağını": "win" },
+                    level1: { tr: "Tartışıyorlardı.", en: "They were discussing." },
+                    level2: { tr: "<span class='bg-green'>Maçı <span class='text-blue'>hangi takımın</span> kazanacağını</span> tartışıyorlardı.", en: "They were discussing <span class='bg-green'><span class='text-blue'>which team</span> would win the match</span>." }
+                },
+                {
+                    vocab: { "inanmıyorum": "believe", "fiyatların": "prices", "yakında": "soon", "düşeceğine": "fall" },
+                    level1: { tr: "İnanmıyorum.", en: "I don't believe." },
+                    level2: { tr: "<span class='bg-green'>Fiyatların yakında düşeceğine</span> inanmıyorum.", en: "I don't believe <span class='bg-green'><span class='text-blue'>that</span> prices will fall soon</span>." }
+                },
+                {
+                    vocab: { "öğretmen": "teacher", "kontrol": "checked", "etti": "checked", "öğrencilerin": "students", "yazdığını": "wrote" },
+                    level1: { tr: "Öğretmen kontrol etti.", en: "The teacher checked." },
+                    level2: { tr: "Öğretmen <span class='bg-green'>öğrencilerin <span class='text-blue'>ne</span> yazdığını</span> kontrol etti.", en: "The teacher checked <span class='bg-green'><span class='text-blue'>what</span> the students wrote</span>." }
+                },
+                {
+                    vocab: { "sormayı": "ask", "unuttum": "forgot", "restoranın": "restaurant", "kapandığını": "closes" },
+                    level1: { tr: "Sormayı unuttum.", en: "I forgot to ask." },
+                    level2: { tr: "<span class='bg-green'>Restoranın <span class='text-blue'>ne zaman</span> kapandığını</span> sormayı unuttum.", en: "I forgot to ask <span class='bg-green'><span class='text-blue'>when</span> the restaurant closes</span>." }
+                },
+                {
+                    vocab: { "patron": "boss", "öğrenmek": "know", "istedi": "wanted", "ihracatın": "export", "düştüğünü": "dropped" },
+                    level1: { tr: "Patron öğrenmek istedi.", en: "The boss wanted to know." },
+                    level2: { tr: "Patron <span class='bg-green'>ihracatın <span class='text-blue'>neden</span> düştüğünü</span> öğrenmek istedi.", en: "The boss wanted to know <span class='bg-green'><span class='text-blue'>why</span> the export dropped</span>." }
+                },
+                {
+                    vocab: { "hatırlayamıyoruz": "remember", "sipariş": "ordered", "verdiğimizi": "ordered" },
+                    level1: { tr: "Hatırlayamıyoruz.", en: "We can't remember." },
+                    level2: { tr: "<span class='bg-green'><span class='text-blue'>Ne zaman</span> sipariş verdiğimizi</span> hatırlayamıyoruz.", en: "We can't remember <span class='bg-green'><span class='text-blue'>when</span> we ordered</span>." }
                 }
             ],
             extraDeck4: [
-                // Empty placeholder ready for your next sentences
                 {
-                    vocab: { },
-                    level1: { tr: "Coming soon...", en: "Coming soon..." },
-                    level2: { tr: "Coming soon...", en: "Coming soon..." }
+                    vocab: { "görebiliyorum": "see", "çok": "very", "yorgun": "tired", "olduğunu": "are" },
+                    level1: { tr: "Görebiliyorum.", en: "I can see." },
+                    level2: { tr: "<span class='bg-green'>Çok yorgun olduğunu</span> görebiliyorum.", en: "I can see <span class='bg-green'><span class='text-blue'>that</span> you are very tired</span>." }
+                },
+                {
+                    vocab: { "lütfen": "please", "bana": "me", "söyle": "tell", "toplantıyı": "meeting", "nereye": "where", "aldıklarını": "took" },
+                    level1: { tr: "Lütfen bana söyle.", en: "Please tell me." },
+                    level2: { tr: "<span class='bg-green'>Toplantıyı <span class='text-blue'>nereye</span> aldıklarını</span> lütfen bana söyle.", en: "Please tell me <span class='bg-green'><span class='text-blue'>where</span> they took the meeting</span>." }
+                },
+                {
+                    vocab: { "bilmiyorduk": "know", "yeni": "new", "mağazanın": "store", "açıldığını": "opened" },
+                    level1: { tr: "Bilmiyorduk.", en: "We didn't know." },
+                    level2: { tr: "<span class='bg-green'>Yeni mağazanın açıldığını</span> bilmiyorduk.", en: "We didn't know <span class='bg-green'><span class='text-blue'>that</span> the new store opened</span>." }
+                },
+                {
+                    vocab: { "açıklayabilir": "explain", "misin": "can", "makinenin": "machine", "çalıştığını": "works" },
+                    level1: { tr: "Açıklayabilir misin?", en: "Can you explain?" },
+                    level2: { tr: "<span class='bg-green'>Makinenin <span class='text-blue'>nasıl</span> çalıştığını</span> açıklayabilir misin?", en: "Can you explain <span class='bg-green'><span class='text-blue'>how</span> the machine works</span>?" }
+                },
+                {
+                    vocab: { "merak": "wondering", "ediyorum": "wondering", "yarın": "tomorrow", "yağmur": "rain", "yağıp": "whether", "yağmayacağını": "whether" },
+                    level1: { tr: "Merak ediyorum.", en: "I am wondering." },
+                    level2: { tr: "<span class='bg-green'>Yarın yağmur <span class='text-blue'>yağıp yağmayacağını</span></span> merak ediyorum.", en: "I am wondering <span class='bg-green'><span class='text-blue'>if</span> it will rain tomorrow</span>." }
+                },
+                {
+                    vocab: { "anlayamıyorum": "understand", "neden": "why", "kızgın": "angry" },
+                    level1: { tr: "Anlayamıyorum.", en: "I can't understand." },
+                    level2: { tr: "<span class='bg-green'><span class='text-blue'>Neden</span> kızgın olduğunu</span> anlayamıyorum.", en: "I can't understand <span class='bg-green'><span class='text-blue'>why</span> he is angry</span>." }
+                },
+                {
+                    vocab: { "öğrenmeliyiz": "learn", "kazaya": "accident", "kimin": "who", "sebep": "caused" },
+                    level1: { tr: "Öğrenmeliyiz.", en: "We should learn." },
+                    level2: { tr: "<span class='bg-green'>Kazaya <span class='text-blue'>kimin</span> sebep olduğunu</span> öğrenmeliyiz.", en: "We should learn <span class='bg-green'><span class='text-blue'>who</span> caused the accident</span>." }
+                },
+                {
+                    vocab: { "emin": "sure", "misin": "are", "kapıyı": "door", "kilitlediğinden": "locked" },
+                    level1: { tr: "Emin misin?", en: "Are you sure?" },
+                    level2: { tr: "<span class='bg-green'>Kapıyı kilitlediğinden</span> emin misin?", en: "Are you sure <span class='bg-green'><span class='text-blue'>that</span> you locked the door</span>?" }
+                },
+                {
+                    vocab: { "duymadım": "hear", "müdürün": "manager", "söylediğini": "said" },
+                    level1: { tr: "Duymadım.", en: "I didn't hear." },
+                    level2: { tr: "<span class='bg-green'>Müdürün <span class='text-blue'>ne</span> söylediğini</span> duymadım.", en: "I didn't hear <span class='bg-green'><span class='text-blue'>what</span> the manager said</span>." }
                 }
             ]
         };
