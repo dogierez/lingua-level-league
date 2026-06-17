@@ -143,6 +143,14 @@
             min-height: 60px;
         }
 
+        /* League 2 Base Sentence Highlight */
+        .base-sentence {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
         /* Standard Modifiers */
         .text-purple { color: var(--purple-highlight); font-weight: 700; }
         .text-orange { color: var(--orange-highlight); font-weight: 700; }
@@ -168,6 +176,7 @@
 
         .dict-word:hover {
             background-color: #e3f2fd;
+            color: var(--text-main);
         }
 
         .divider-line {
@@ -859,7 +868,7 @@
                 {
                     vocab: { "emin": "sure", "misin": "are", "kapıyı": "door", "kilitlediğinden": "lock", "kilitledi": "lock" },
                     level1: { tr: "Emin misin?", en: "Are you sure?" },
-                    level2: { tr: "<span class='text-green'>Kapıyı kilitledi<span class='text-blue'>ğinden</span></span> emin misin?", en: "Are you sure <span class='text-green'><span class='text-blue'>that</span> you locked the door</span>?" }
+                    level2: { tr: "<span class='text-green'>Kapıyı kilitledi<span class='text-blue'>ğinden</span></span> emin misin?", en: "Are you sure <span class='text-green'><span class='text-blue'>that</span> you locked the door</span>." }
                 },
                 {
                     vocab: { "duymadım": "hear", "müdürün": "manager", "söylediğini": "say" },
@@ -870,11 +879,12 @@
         };
 
         let currentDeckData = decks.deck1;
+        let currentDeckName = 'deck1';
         let currentLeague = 1;
         let activeQueue = []; 
         let wrongQueue = [];  
         let currentIndex = 0; 
-        let maxLeague = 3; // Dynamically updated based on regular vs extra deck
+        let maxLeague = 3; 
         
         let correctCount = 0;
         let wrongCount = 0;
@@ -907,6 +917,8 @@
         function switchDeck(deckName) {
             document.querySelectorAll('.btn-deck').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${deckName}`).classList.add('active');
+
+            currentDeckName = deckName;
 
             if (deckName.startsWith('extra')) {
                 maxLeague = 2; // Extra decks only have 2 leagues
@@ -944,7 +956,7 @@
             renderCard();
         }
 
-        // Contextual Wrapping Function
+        // Contextual Wrapping Function for Dictionaries
         function wrapWords(htmlString) {
             const temp = document.createElement('div');
             temp.innerHTML = htmlString;
@@ -968,6 +980,23 @@
             return temp.innerHTML;
         }
 
+        // Highlight function to target text strictly OUTSIDE the purple clause
+        function applyLeague2Highlight(htmlString) {
+            const temp = document.createElement('div');
+            temp.innerHTML = htmlString;
+            
+            Array.from(temp.childNodes).forEach(node => {
+                // If it is a text node with actual characters, wrap it in the black background span
+                if (node.nodeType === 3 && node.textContent.trim().length > 0) {
+                    const span = document.createElement('span');
+                    span.className = 'base-sentence';
+                    span.textContent = node.textContent;
+                    node.parentNode.replaceChild(span, node);
+                }
+            });
+            return temp.innerHTML;
+        }
+
         function renderCard() {
             isEnglishVisible = false;
             tooltip.style.display = 'none';
@@ -975,11 +1004,20 @@
             const sentenceId = activeQueue[currentIndex];
             const data = currentDeckData[sentenceId][`level${currentLeague}`];
             
+            let displayTr = data.tr;
+            let displayEn = data.en;
+
+            // Apply base sentence highlight strictly to League 2 of Regular Decks (1-4)
+            if (currentLeague === 2 && !currentDeckName.startsWith('extra')) {
+                displayTr = applyLeague2Highlight(displayTr);
+                displayEn = applyLeague2Highlight(displayEn);
+            }
+            
             elBadge.innerText = `League ${currentLeague}`;
             elProgress.innerText = `Card ${currentIndex + 1} of ${activeQueue.length}`;
             
-            elTurkish.innerHTML = wrapWords(data.tr);
-            elEnglish.innerHTML = data.en;
+            elTurkish.innerHTML = wrapWords(displayTr);
+            elEnglish.innerHTML = displayEn;
             
             elEnglish.style.display = 'none';
             elDivider.style.display = 'none';
